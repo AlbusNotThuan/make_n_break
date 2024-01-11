@@ -18,7 +18,7 @@ public class PlayScreen implements Screen {
         this.game = game;
         texture = new Texture("testing.gif");
         gamecam = new OrthographicCamera();
-        gameport = new FitViewport(1600, 1600, gamecam);
+        gameport = new FitViewport(800, 800, gamecam);
     }
     @Override
     public void show() {
