@@ -9,8 +9,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.makeandbreak.game.MakeAndBreak;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Align;
 
-public class PlayScreen implements Screen {
+public class fPlayScreen implements Screen {
     private MakeAndBreak game;
     Texture texture;
     private OrthographicCamera gamecam;
@@ -21,6 +26,33 @@ public class PlayScreen implements Screen {
         gamecam = new OrthographicCamera();
         gameport = new FitViewport(1600 , 800, gamecam);
     }
+    @Override
+    public void create() {
+
+        Stage stage;
+        Table table;
+
+            public WhiteBorderedTable(Stage stage) {
+                this.stage = stage;
+                this.table = new Table();
+                table.setFillParent(true);
+                table.setBackground(new Skin().getDrawable("white"));
+
+                for (int x = 0; x < 9; x++) {
+                    for (int y = 0; y < 6; y++) {
+                        final int row = y;
+                        final int col = x;
+
+                        Label label = new Label("(" + col + "," + row + ")", new Skin());
+                        label.setAlignment(Align.center);
+                        table.add(label).width(30).height(30).pad(5);
+                    }
+                    table.row();
+                }
+
+                stage.addActor(table);
+            }
+        }
     @Override
     public void show() {
 
