@@ -2,11 +2,14 @@ package Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.makeandbreak.game.MakeAndBreak;
@@ -16,11 +19,16 @@ public class PlayScreen implements Screen {
     Texture texture;
     private OrthographicCamera gamecam;
     private Viewport gameport;
+
+    //Drag and drop
+    float x = 0;
+    float y = 0;
+
     public PlayScreen(MakeAndBreak game){
         this.game = game;
-        //texture = new Texture("workinprogress.png");
+        texture = new Texture("workinprogress.png");
         gamecam = new OrthographicCamera();
-        gameport = new FitViewport(1600 , 800, gamecam);
+        gameport = new FitViewport(1520 , 1200, gamecam);
     }
     @Override
     public void show() {
@@ -32,9 +40,14 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.setProjectionMatrix(gamecam.combined);
-        //game.batch.begin();
-        //game.batch.draw(texture , -100 ,-100);
-        //game.batch.end();
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) y += 20;
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) y -= 20;
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) x -= 20;
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) x += 20;
+
+        game.batch.begin();
+        game.batch.draw(texture , x ,y);
+        game.batch.end();
     }
 
     @Override
