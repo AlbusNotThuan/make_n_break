@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
@@ -14,13 +15,16 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.makeandbreak.game.MakeAndBreak;
 
+import Classes.Box;
+
 public class PlayScreen implements Screen {
     private MakeAndBreak game;
     Texture texture;
-    private OrthographicCamera gamecam;
+    public OrthographicCamera gamecam;
     private Viewport gameport;
+    Box box = new Box();
 
-    //Drag and drop
+    //
     float x = 0;
     float y = 0;
 
@@ -48,6 +52,13 @@ public class PlayScreen implements Screen {
         game.batch.begin();
         game.batch.draw(texture , x ,y);
         game.batch.end();
+
+        game.shape.setProjectionMatrix(gamecam.combined);
+        game.shape.begin(ShapeRenderer.ShapeType.Line);
+        game.shape.setColor(1,0,0,1);
+        game.shape.circle(box.x, box.y, 10);
+        game.shape.end();
+
     }
 
     @Override
