@@ -24,6 +24,7 @@ import com.makeandbreak.game.MakeAndBreak;
 
 import Classes.Box;
 import Classes.CustomButton;
+import Classes.Grid;
 
 public class PlayManager extends ApplicationAdapter implements Screen, InputProcessor {
     final MakeAndBreak game;
@@ -56,7 +57,7 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
 //        buttonStyle.down = drawable;
 //        buttonStyle.font = font;
 
-        Table table = new Table();
+        Grid table = new Grid();
 //        for (int i = 0; i < 3; i++){
 //            for (int j = 0; j < 3; j++){
 //                TextButton button = new TextButton("Button " + (i * 3 + j + 1), buttonStyle);
@@ -68,10 +69,12 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 CustomButton button = new CustomButton();
-                table.add(button).width(100).height(100).pad(10);
+                button.setID(i*3+j+1);
+                table.add(button).width(80).height(80).pad(2);
                 button.addListener(new InputListener(){
                     public void touchUp(InputEvent event, float x, float y){
-                        button.isPressed();
+                        button.isChecked(table);
+                        System.out.println("Button clicked!");
                     }
                 });
             }
