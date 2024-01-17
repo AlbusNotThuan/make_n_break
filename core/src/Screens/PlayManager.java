@@ -66,20 +66,14 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
 //            table.row();
 //        }
 
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++){
-                CustomButton button = new CustomButton();
-                button.setID(i*3+j+1);
-                table.add(button).width(80).height(80).pad(2);
-                button.addListener(new InputListener(){
-                    public void touchUp(InputEvent event, float x, float y){
-                        button.isChecked(table);
-                        System.out.println("Button clicked!");
-                    }
-                });
-            }
-            table.row();
-        }
+//        for (int i = 0; i < 6; i++){
+//            for (int j = 0; j < 6; j++){
+//                CustomButton button = new CustomButton();
+//                button.setID(i*3+j+1);
+//                table.add(button).width(80).height(80).pad(2);
+//            }
+//            table.row();
+//        }
 
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
