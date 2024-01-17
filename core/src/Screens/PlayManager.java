@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -21,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.makeandbreak.game.MakeAndBreak;
 
 import Classes.Box;
+import Classes.CustomButton;
 
 public class PlayManager extends ApplicationAdapter implements Screen, InputProcessor {
     final MakeAndBreak game;
@@ -35,33 +38,42 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         gameport = new FitViewport(1520 , 1200, gamecam);
         Gdx.input.setInputProcessor(this);
 
-//        gamecam.setToOrtho(false, 1520,1200);
-//        gamecam.translate(0,0);
+        gamecam.setToOrtho(false, 1520,1200);
+        gamecam.translate(-760,-600);
+//        gamecam.setToOrtho(false, 1520, 1200);
+//        gamecam.position.set(gamecam.viewportWidth / 2, gamecam.viewportHeight / 2, 0);
+//        gamecam.update();
         stage = new Stage();
 
-        BitmapFont font = new BitmapFont();
-        Texture texture =  new Texture(Gdx.files.internal("3.png"));
-        TextureRegion textureRegion = new TextureRegion(texture);
-        TextureRegionDrawable drawable = new TextureRegionDrawable(textureRegion);
-
-        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
-        buttonStyle.up = drawable;
-        buttonStyle.checked = drawable;
-        buttonStyle.down = drawable;
-        buttonStyle.font = font;
-
-
-//        for (int y = 0; y < 40; y++){
-//            for(int x = 0; x < 40; x++){
-//                stage.addActor(new TextButton("" + x + y * 40, buttonStyle));
-//            }
-//        }
+//        BitmapFont font = new BitmapFont();
+//        Texture texture =  new Texture(Gdx.files.internal("3.png"));
+//        TextureRegion textureRegion = new TextureRegion(texture);
+//        TextureRegionDrawable drawable = new TextureRegionDrawable(textureRegion);
+//
+//        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
+//        buttonStyle.up = drawable;
+//        buttonStyle.checked = drawable;
+//        buttonStyle.down = drawable;
+//        buttonStyle.font = font;
 
         Table table = new Table();
+//        for (int i = 0; i < 3; i++){
+//            for (int j = 0; j < 3; j++){
+//                TextButton button = new TextButton("Button " + (i * 3 + j + 1), buttonStyle);
+//                table.add(button).width(100).height(100).pad(10);
+//            }
+//            table.row();
+//        }
+
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
-                TextButton button = new TextButton("Button " + (i * 3 + j + 1), buttonStyle);
+                CustomButton button = new CustomButton();
                 table.add(button).width(100).height(100).pad(10);
+                button.addListener(new InputListener(){
+                    public void touchUp(InputEvent event, float x, float y){
+                        button.isPressed();
+                    }
+                });
             }
             table.row();
         }
@@ -77,6 +89,7 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
 
     @Override
     public void render(float delta) {
+        //Testing Rectangle
         game.shape.setProjectionMatrix(gamecam.combined);
         game.shape.begin(ShapeRenderer.ShapeType.Line);
         game.shape.setColor(1,0,0,1);
@@ -88,24 +101,18 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
 
         game.shape.rect(box.x, box.y, box.width, box.height);
         game.shape.end();
-//        float buttonWidth = gamecam.viewportWidth / 40;
-//        float buttonHeight = gamecam.viewportHeight / 40;
-//        for (int y = 0; y < buttonHeight ; y++){
-//            for(int x = 0; x < buttonWidth; x++){
-//                TextButton button = (TextButton) stage.getActors().get(x + y * 40);
-//                button.setX(x * buttonWidth);
-//                button.setY(y * buttonHeight);
-//                button.setWidth(buttonWidth);
-//                button.setHeight(buttonHeight);
-//            }
-//        }
+
+
+        //Grid
         stage.setViewport(gameport);
         stage.draw();
+
     }
 
     @Override
     public void resize(int width, int height) {
         gameport.update(width, height);
+        gamecam.update();
     }
 
     @Override
@@ -145,9 +152,6 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        float worldX = Gdx.input.getX();
-        float worldY = Gdx.graphics.getHeight() - Gdx.input.getY();
-
         return false;
     }
 
