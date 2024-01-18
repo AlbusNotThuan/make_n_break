@@ -12,27 +12,25 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class ColorSelector extends ImageButton {
     private Color color;
+    private static final ImageButtonStyle buttonStyle;
+    static {
+        //Texture to draw
+        Texture texture =  new Texture(Gdx.files.internal("red.png"));
+        TextureRegion textureRegion = new TextureRegion(texture);
+        TextureRegionDrawable drawable = new TextureRegionDrawable(textureRegion);
 
-    public ColorSelector(Color color, String textureFilePath) {
-        super(createButtonStyle(textureFilePath));
+        buttonStyle = new ImageButtonStyle();
+        buttonStyle.up = drawable;
+    }
+
+    public ColorSelector(Color color) {
+        super(buttonStyle);
         this.color = color;
         this.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 GlobalState.selectedColor = color;
-                System.out.println(textureFilePath);
             }
         });
-    }
-
-    private static ImageButtonStyle createButtonStyle(String textureFilePath) {
-        //Texture to draw
-        Texture texture =  new Texture(Gdx.files.internal(textureFilePath));
-        TextureRegion textureRegion = new TextureRegion(texture);
-        TextureRegionDrawable drawable = new TextureRegionDrawable(textureRegion);
-
-        ImageButtonStyle buttonStyle = new ImageButtonStyle();
-        buttonStyle.up = drawable;
-        return buttonStyle;
     }
 }
