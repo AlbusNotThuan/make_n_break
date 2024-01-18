@@ -47,14 +47,25 @@ public class CustomButton extends ImageButton {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Button clicked");
+//                System.out.println("Button clicked");
                 int row = id/6;
                 int col = id%6;
-                if (row > 0) {
-                    grid.getButton(row - 1, col).setChecked(isChecked());
+                boolean wasChecked = isChecked();
+                if (row > 0 && row < 5) {
+                    boolean topChecked = grid.getButton(row - 1, col).isChecked();
+                    boolean bottomChecked = grid.getButton(row + 1, col).isChecked();
+                    if ((topChecked == bottomChecked) && (topChecked == !wasChecked)) {
+                        setChecked(wasChecked);
+                        grid.getButton(row - 1, col).setChecked(wasChecked);
+                        grid.getButton(row + 1, col).setChecked(wasChecked);
+                    } else {
+                        System.out.println("Invalid move");
+                        setChecked(!wasChecked);
+                    }
                 }
-                if (row < 5) {
-                    grid.getButton(row + 1, col).setChecked(isChecked());
+                else{
+                    System.out.println("Invalid move");
+                    setChecked(!wasChecked);
                 }
                 super.clicked(event, x, y);
             }
