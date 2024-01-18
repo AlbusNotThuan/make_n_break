@@ -1,6 +1,7 @@
 package Classes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -43,36 +44,104 @@ public class CustomButton extends ImageButton {
         this.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+//                System.out.println("Button clicked");
+                boolean wasChecked = !isChecked();
+                int row = id / 6;
+                int col = id % 6;
+                //horizontally
+                if (button == Input.Buttons.RIGHT){
+                    if (col > 0 && col < 5){
+                        boolean rightCheck = grid.getButton(row, col + 1).isChecked();
+                        boolean leftCheck = grid.getButton(row, col - 1).isChecked();
+                        System.out.println(rightCheck);
+                        System.out.println(leftCheck);
+                        System.out.println(wasChecked);
+                        if ((rightCheck == leftCheck) && (rightCheck == !wasChecked)){
+                            setChecked(wasChecked);
+                            grid.getButton(row, col + 1).setChecked(wasChecked);
+                            grid.getButton(row, col - 1).setChecked(wasChecked);
+                            System.out.println("bbb");
+                        } else {
+                            System.out.println("Invalid move");
+                            setChecked(!wasChecked);
+                        }
+                    } else {
+                        System.out.println("Invalid move (outter)");
+                        setChecked(!wasChecked);
+                    }
 
+                }else if (button == Input.Buttons.LEFT){
+                    //vertically
+                    if (row > 0 && row < 5) {
+                        boolean topChecked = grid.getButton(row - 1, col).isChecked();
+                        boolean bottomChecked = grid.getButton(row + 1, col).isChecked();
+                        System.out.println(topChecked);
+                        System.out.println(bottomChecked);
+                        System.out.println(wasChecked);
+                        if ((topChecked == bottomChecked) && (topChecked == !wasChecked)) {
+                            setChecked(wasChecked);
+                            grid.getButton(row - 1, col).setChecked(wasChecked);
+                            grid.getButton(row + 1, col).setChecked(wasChecked);
+                            System.out.println("aaa");
+//                        setColor(GlobalState.selectedColor);
+                        } else {
+                            System.out.println("Invalid move");
+                            setChecked(!wasChecked);
+                        }
+                    } else {
+                        System.out.println("Invalid move (outter)");
+                        setChecked(!wasChecked);
+                    }
+                }
                 return super.touchDown(event, x, y, pointer, button);
 
             }
 
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
 //                System.out.println("Button clicked");
-                int row = id/6;
-                int col = id%6;
-                boolean wasChecked = isChecked();
-                if (row > 0 && row < 5) {
-                    boolean topChecked = grid.getButton(row - 1, col).isChecked();
-                    boolean bottomChecked = grid.getButton(row + 1, col).isChecked();
-                    if ((topChecked == bottomChecked) && (topChecked == !wasChecked)) {
-                        setChecked(wasChecked);
-                        grid.getButton(row - 1, col).setChecked(wasChecked);
-                        grid.getButton(row + 1, col).setChecked(wasChecked);
-//                        setColor(GlobalState.selectedColor);
-                    } else {
-                        System.out.println("Invalid move");
-                        setChecked(!wasChecked);
-                    }
-                }
-                else{
-                    System.out.println("Invalid move");
-                    setChecked(!wasChecked);
-                }
-                super.clicked(event, x, y);
-            }
+//                boolean wasChecked = isChecked();
+//                int row = id / 6;
+//                int col = id % 6;
+//                //horizontally
+//                if (event.getButton() == Input.Buttons.RIGHT){
+//                    if (col > 0 && col < 5){
+//                        boolean rightCheck = grid.getButton(row, col + 1).isChecked();
+//                        boolean leftCheck = grid.getButton(row, col - 1).isChecked();
+//                        if ((rightCheck == leftCheck) && (rightCheck == !wasChecked)){
+//                            setChecked(wasChecked);
+//                            grid.getButton(row, col + 1).setChecked(wasChecked);
+//                            grid.getButton(row, col - 1).setChecked(wasChecked);
+//                        } else {
+//                            System.out.println("Invalid move");
+//                            setChecked(!wasChecked);
+//                        }
+//                    }
+//
+//                }else if (event.getButton() == Input.Buttons.LEFT){
+//                    //vertically
+//                    if (row > 0 && row < 5) {
+//                        boolean topChecked = grid.getButton(row - 1, col).isChecked();
+//                        boolean bottomChecked = grid.getButton(row + 1, col).isChecked();
+//                        if ((topChecked == bottomChecked) && (topChecked == !wasChecked)) {
+//                            setChecked(wasChecked);
+//                            grid.getButton(row - 1, col).setChecked(wasChecked);
+//                            grid.getButton(row + 1, col).setChecked(wasChecked);
+////                        setColor(GlobalState.selectedColor);
+//                        } else {
+//                            System.out.println("Invalid move");
+//                            setChecked(!wasChecked);
+//                        }
+//                    } else {
+//                        System.out.println("Invalid move");
+//                        setChecked(!wasChecked);
+//                    }
+//                }
+//                    super.clicked(event, x, y);
+//            }
+
+
+            ///END
         });
     }
 
