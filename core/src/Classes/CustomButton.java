@@ -1,12 +1,14 @@
 package Classes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class CustomButton extends ImageButton {
@@ -14,6 +16,7 @@ public class CustomButton extends ImageButton {
     private boolean clicked;
     private int id;
     private Grid grid;
+    private Color selectedColor;
     private static final ImageButtonStyle buttonStyle;
     static {
         //Texture to draw
@@ -58,6 +61,7 @@ public class CustomButton extends ImageButton {
                         setChecked(wasChecked);
                         grid.getButton(row - 1, col).setChecked(wasChecked);
                         grid.getButton(row + 1, col).setChecked(wasChecked);
+//                        setColor(GlobalState.selectedColor);
                     } else {
                         System.out.println("Invalid move");
                         setChecked(!wasChecked);
@@ -70,6 +74,35 @@ public class CustomButton extends ImageButton {
                 super.clicked(event, x, y);
             }
         });
+    }
+
+    public void setColor(Color color) {
+        ImageButtonStyle style = getButtonStyle(color);
+        this.setStyle(style);
+    }
+
+    private static ImageButtonStyle getButtonStyle(Color color) {
+        ImageButtonStyle style = new ImageButtonStyle();
+
+        // Set the image of the button based on the color
+        String imagePath;
+        if (color == Color.RED) {
+            imagePath = "red.png";
+        } else if (color == Color.GREEN) {
+            imagePath = "green.png";
+        } else if (color == Color.BLUE) {
+            imagePath = "blue.png";
+        } else {
+            imagePath = "white.png";
+        }
+
+        Texture texture = new Texture(Gdx.files.internal(imagePath));
+        TextureRegion textureRegion = new TextureRegion(texture);
+        TextureRegionDrawable drawable = new TextureRegionDrawable(textureRegion);
+
+        style.up = drawable;
+
+        return style;
     }
 
     @Override

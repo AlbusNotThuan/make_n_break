@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -23,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.makeandbreak.game.MakeAndBreak;
 
 import Classes.Box;
+import Classes.ColorSelector;
 import Classes.CustomButton;
 import Classes.Grid;
 
@@ -45,37 +48,13 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
 //        gamecam.position.set(gamecam.viewportWidth / 2, gamecam.viewportHeight / 2, 0);
 //        gamecam.update();
         stage = new Stage();
-
-//        BitmapFont font = new BitmapFont();
-//        Texture texture =  new Texture(Gdx.files.internal("3.png"));
-//        TextureRegion textureRegion = new TextureRegion(texture);
-//        TextureRegionDrawable drawable = new TextureRegionDrawable(textureRegion);
-//
-//        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
-//        buttonStyle.up = drawable;
-//        buttonStyle.checked = drawable;
-//        buttonStyle.down = drawable;
-//        buttonStyle.font = font;
-
         Grid table = new Grid();
-//        for (int i = 0; i < 3; i++){
-//            for (int j = 0; j < 3; j++){
-//                TextButton button = new TextButton("Button " + (i * 3 + j + 1), buttonStyle);
-//                table.add(button).width(100).height(100).pad(10);
-//            }
-//            table.row();
-//        }
-
-//        for (int i = 0; i < 6; i++){
-//            for (int j = 0; j < 6; j++){
-//                CustomButton button = new CustomButton();
-//                button.setID(i*3+j+1);
-//                table.add(button).width(80).height(80).pad(2);
-//            }
-//            table.row();
-//        }
 
         stage.addActor(table);
+//        Button.ButtonStyle style3 = new Button.ButtonStyle();
+//        ColorSelector red = new ColorSelector(Color.RED);
+//        red.setPosition(400, 0);
+//        stage.addActor(red);
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -87,17 +66,17 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
     @Override
     public void render(float delta) {
         //Testing Rectangle
-        game.shape.setProjectionMatrix(gamecam.combined);
-        game.shape.begin(ShapeRenderer.ShapeType.Line);
-        game.shape.setColor(1,0,0,1);
-
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) box.y += 20;
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) box.y -= 20;
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) box.x -= 20;
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) box.x += 20;
-
-        game.shape.rect(box.x, box.y, box.width, box.height);
-        game.shape.end();
+//        game.shape.setProjectionMatrix(gamecam.combined);
+//        game.shape.begin(ShapeRenderer.ShapeType.Line);
+//        game.shape.setColor(1,0,0,1);
+//
+//        if (Gdx.input.isKeyPressed(Input.Keys.UP)) box.y += 20;
+//        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) box.y -= 20;
+//        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) box.x -= 20;
+//        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) box.x += 20;
+//
+//        game.shape.rect(box.x, box.y, box.width, box.height);
+//        game.shape.end();
 
 
         //Grid
