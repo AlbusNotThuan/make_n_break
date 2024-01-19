@@ -77,25 +77,31 @@ public class CustomButton extends ImageButton {
                         boolean bottomChecked = grid.getButton(row + 1, col).isChecked();
                         System.out.println(topChecked);
                         System.out.println(bottomChecked);
-                        System.out.println(wasChecked);
+//                        System.out.println(wasChecked);
                         if ((topChecked == bottomChecked) && (topChecked == !wasChecked)) {
-                            setChecked(wasChecked);
+                            setChecked(!wasChecked);
                             grid.getButton(row - 1, col).setChecked(wasChecked);
                             grid.getButton(row + 1, col).setChecked(wasChecked);
                             System.out.println("aaa");
 //                        setColor(GlobalState.selectedColor);
                         } else {
                             System.out.println("Invalid move");
-                            setChecked(!wasChecked);
+                            setChecked(wasChecked);
                         }
                     } else {
                         System.out.println("Invalid move (outter)");
-                        setChecked(!wasChecked);
+                        setChecked(wasChecked);
                     }
                 }
-                return super.touchDown(event, x, y, pointer, button);
+//                return super.touchDown(event, x, y, pointer, button);
+                return false;
 
             }
+
+//            @Override
+//            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+//                super.touchUp(event, x, y, pointer, button);
+//            }
 
 //            @Override
 //            public void clicked(InputEvent event, float x, float y) {
@@ -105,6 +111,7 @@ public class CustomButton extends ImageButton {
 //                int col = id % 6;
 //                //horizontally
 //                if (event.getButton() == Input.Buttons.RIGHT){
+//                    System.out.println("Right Click");
 //                    if (col > 0 && col < 5){
 //                        boolean rightCheck = grid.getButton(row, col + 1).isChecked();
 //                        boolean leftCheck = grid.getButton(row, col - 1).isChecked();
