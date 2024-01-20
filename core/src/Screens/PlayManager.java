@@ -49,12 +49,27 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
 //        gamecam.update();
         stage = new Stage();
         Grid table = new Grid();
-
+        table.setPosition(480,0);
         stage.addActor(table);
-//        Button.ButtonStyle style3 = new Button.ButtonStyle();
-//        ColorSelector red = new ColorSelector(Color.RED);
-//        red.setPosition(400, 0);
-//        stage.addActor(red);
+        Button.ButtonStyle style3 = new Button.ButtonStyle();
+
+        //Color Selector
+        ColorSelector redSelector = new ColorSelector(Color.RED, "red.png");
+        redSelector.setPosition(-400, 0);
+        redSelector.setSize(80,250);
+        stage.addActor(redSelector);
+
+        ColorSelector blueSelector = new ColorSelector(Color.BLUE, "blue.png");
+        blueSelector.setPosition(-300,0);
+        blueSelector.setSize(80,250);
+        stage.addActor(blueSelector);
+
+        ColorSelector greenSelector = new ColorSelector(Color.GREEN, "green.png");
+        greenSelector.setPosition(-500,0);
+        greenSelector.setSize(80,250);
+        stage.addActor(greenSelector);
+
+
         Gdx.input.setInputProcessor(stage);
     }
 
