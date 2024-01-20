@@ -3,6 +3,8 @@ package Screens;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -40,7 +42,7 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         this.game = game;
         gamecam = new OrthographicCamera();
         gameport = new FitViewport(1520 , 1200, gamecam);
-        Gdx.input.setInputProcessor(this);
+//        Gdx.input.setInputProcessor(this);
 
         gamecam.setToOrtho(false, 1520,1200);
         gamecam.translate(-760,-600);
@@ -48,9 +50,9 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
 //        gamecam.position.set(gamecam.viewportWidth / 2, gamecam.viewportHeight / 2, 0);
 //        gamecam.update();
         stage = new Stage();
-        Grid table = new Grid();
-        table.setPosition(480,0);
-        stage.addActor(table);
+        Grid grid = new Grid();
+        grid.setPosition(480,0);
+        stage.addActor(grid);
         Button.ButtonStyle style3 = new Button.ButtonStyle();
 
         //Color Selector
@@ -69,8 +71,26 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         greenSelector.setSize(80,250);
         stage.addActor(greenSelector);
 
-
-        Gdx.input.setInputProcessor(stage);
+        InputProcessor inputProcessor = new InputAdapter(){
+            @Override
+            public boolean keyDown(int keycode) {
+                if (keycode == Input.Keys.SPACE){
+                    for (int i = 0; i < grid.getRows(); i++) {
+                        for (int j = 0; j < grid.getColumns(); j++) {
+                            CustomButton button = grid.getButton(i, j);
+                            button.setColor(Color.WHITE);
+                        }
+                    }
+                    return true;
+                }
+                return false;
+            }
+        };
+        InputMultiplexer Multiplexer = new InputMultiplexer();
+        Multiplexer.addProcessor(stage);
+        Multiplexer.addProcessor(inputProcessor);
+        Multiplexer.addProcessor(this);
+        Gdx.input.setInputProcessor(Multiplexer);
     }
 
     @Override
