@@ -49,22 +49,13 @@ public class CustomButton extends ImageButton {
                         if ((rightColor == leftColor) && (rightColor == wasColor)){
                             if (rightColor == Color.WHITE){
                                 setColor(GlobalState.selectedColor);
-                                selectedColor = GlobalState.selectedColor;
-
                                 grid.getButton(row, col - 1).setColor(GlobalState.selectedColor);
-                                grid.getButton(row, col - 1).selectedColor = GlobalState.selectedColor;
-
                                 grid.getButton(row, col + 1).setColor(GlobalState.selectedColor);
-                                grid.getButton(row, col + 1).selectedColor = GlobalState.selectedColor;
                             } else {
                                 Color local = Color.WHITE;
                                 setColor(local);
-                                selectedColor = local;
                                 grid.getButton(row, col - 1).setColor(local);
-                                grid.getButton(row, col - 1).selectedColor = local;
-
                                 grid.getButton(row , col+1).setColor(local);
-                                grid.getButton(row , col+1).selectedColor = local;
                             }
                         } else {
                             System.out.println("Invalid move");
@@ -81,21 +72,13 @@ public class CustomButton extends ImageButton {
                         if ((topColor == bottomColor) && (topColor == wasColor)) {
                             if (topColor == Color.WHITE){
                                 setColor(GlobalState.selectedColor);
-                                selectedColor = GlobalState.selectedColor;
                                 grid.getButton(row - 1, col).setColor(GlobalState.selectedColor);
-                                grid.getButton(row - 1, col).selectedColor = GlobalState.selectedColor;
-
                                 grid.getButton(row + 1, col).setColor(GlobalState.selectedColor);
-                                grid.getButton(row + 1, col).selectedColor = GlobalState.selectedColor;
                             } else {
                                 Color local = Color.WHITE;
                                 setColor(local);
-                                selectedColor = local;
                                 grid.getButton(row - 1, col).setColor(local);
-                                grid.getButton(row - 1, col).selectedColor = local;
-
                                 grid.getButton(row + 1, col).setColor(local);
-                                grid.getButton(row + 1, col).selectedColor = local;
                             }
                         } else {
                             System.out.println("Invalid move");
@@ -118,7 +101,7 @@ public class CustomButton extends ImageButton {
         this.setStyle(style);
     }
 
-    private static ImageButtonStyle getButtonStyle(Color color) {
+    private ImageButtonStyle getButtonStyle(Color color) {
         ImageButtonStyle style = new ImageButtonStyle();
 
         // Set the image of the button based on the color
@@ -139,7 +122,7 @@ public class CustomButton extends ImageButton {
         TextureRegion textureRegion = new TextureRegion(texture);
 
         style.up = new TextureRegionDrawable(textureRegion);
-
+        this.selectedColor = color;
         return style;
     }
 

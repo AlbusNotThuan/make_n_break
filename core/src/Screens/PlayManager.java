@@ -80,20 +80,6 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
 
     @Override
     public void render(float delta) {
-        //Testing Rectangle
-//        game.shape.setProjectionMatrix(gamecam.combined);
-//        game.shape.begin(ShapeRenderer.ShapeType.Line);
-//        game.shape.setColor(1,0,0,1);
-//
-//        if (Gdx.input.isKeyPressed(Input.Keys.UP)) box.y += 20;
-//        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) box.y -= 20;
-//        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) box.x -= 20;
-//        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) box.x += 20;
-//
-//        game.shape.rect(box.x, box.y, box.width, box.height);
-//        game.shape.end();
-
-
         //Grid
         stage.setViewport(gameport);
         stage.draw();
