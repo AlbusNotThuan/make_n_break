@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class RuleScreen extends ScreenAdapter {
@@ -108,8 +110,16 @@ public class RuleScreen extends ScreenAdapter {
 
         TextButton button = new TextButton(text, style);
         button.setPosition(x, y);
-        button.setWidth(200); // Set your desired width
-        button.setHeight(40); // Set your desired height
+        style.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("blue.jpg"))));
+        button.setWidth(200);
+        button.setHeight(40);
+
+        style.fontColor = null;
+
+        TextButton buttonn = new TextButton(text, style);
+        buttonn.setPosition(x, y);
+        buttonn.setWidth(400);
+        buttonn.setHeight(500);
 
         return button;
     }
