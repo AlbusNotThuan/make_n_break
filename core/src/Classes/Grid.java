@@ -1,12 +1,8 @@
 package Classes;
 
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Grid extends Table {
     private CustomButton[][] buttons;
@@ -31,30 +27,5 @@ public class Grid extends Table {
             row();
         }
     }
-    public boolean checkMatrix(){
-        ArrayList<Color> currentGrid = new ArrayList<Color>();
-        for (CustomButton[] row : buttons){
-            for (CustomButton button : row){
-                currentGrid.add(button.selectedColor);
-            }
-        }
-        for (Color color : currentGrid){
-            System.out.println(color.toString());
-        }
-        return false;
-    }
-
-//    public void Text2Array(String filepath) throws FileNotFoundException {
-//        File file = new File("Screens/example.txt");
-//        ArrayList<String> result = new ArrayList<>();
-//        Scanner scanner = new Scanner(file);
-//        while (scanner.hasNextLine()){
-//            String line = scanner.nextLine();
-//            result.add(line);
-//        }
-//        for (String line : result){
-//            System.out.println(line);
-//        }
-//    }
 
 }
