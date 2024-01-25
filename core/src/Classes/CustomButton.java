@@ -1,129 +1,43 @@
 package Classes;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class CustomButton extends ImageButton {
-
-    private boolean clicked;
     private int id;
-    private Grid grid;
-    public Color selectedColor = Color.WHITE;
     private static final ImageButtonStyle buttonStyle;
     static {
-        //Default Texture
-        Texture texture =  new Texture(Gdx.files.internal("white.png"));
+        //Texture to draw
+        Texture texture =  new Texture(Gdx.files.internal("3.png"));
         TextureRegion textureRegion = new TextureRegion(texture);
+        TextureRegionDrawable drawable = new TextureRegionDrawable(textureRegion);
+
+        Texture texture1 = new Texture(Gdx.files.internal("4.png"));
+        TextureRegion textureRegion1 = new TextureRegion(texture1);
+        TextureRegionDrawable drawable1 = new TextureRegionDrawable(textureRegion1);
+
         buttonStyle = new ImageButtonStyle();
-        buttonStyle.up =  new TextureRegionDrawable(textureRegion);
+        buttonStyle.up = drawable;
+        buttonStyle.checked = drawable1;
     }
-    public CustomButton(ImageButtonStyle style, Grid table, int id) {
+    public CustomButton(ImageButtonStyle style) {
         super(style);
     }
-
-    public CustomButton(Grid grid, int id){
-        super(buttonStyle);
+    public void setID(int id){
         this.id = id;
-        this.grid = grid;
-        this.addListener(new ClickListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                boolean wasChecked = !isChecked();
-                Color wasColor = getSelectedColor();
-                int row = id / 6;
-                int col = id % 6;
-                //horizontally
-                if (button == Input.Buttons.RIGHT){
-                    if (col > 0 && col < 5){
-                        Color rightColor = grid.getButton(row, col + 1).getSelectedColor();
-                        Color leftColor = grid.getButton(row, col - 1).getSelectedColor();
-                        if ((rightColor == leftColor) && (rightColor == wasColor)){
-                            if (rightColor == Color.WHITE){
-                                setColor(GlobalState.selectedColor);
-                                grid.getButton(row, col - 1).setColor(GlobalState.selectedColor);
-                                grid.getButton(row, col + 1).setColor(GlobalState.selectedColor);
-                            } else {
-                                Color local = Color.WHITE;
-                                setColor(local);
-                                grid.getButton(row, col - 1).setColor(local);
-                                grid.getButton(row , col+1).setColor(local);
-                            }
-                        } else {
-                            System.out.println("Invalid move");
-                        }
-                    } else {
-                        System.out.println("Invalid move (outter)");
-                    }
-
-                }else if (button == Input.Buttons.LEFT){
-                    //vertically
-                    if (row > 0 && row < 5) {
-                        Color topColor = grid.getButton(row - 1, col).getSelectedColor();
-                        Color bottomColor = grid.getButton(row + 1, col).getSelectedColor();
-                        if ((topColor == bottomColor) && (topColor == wasColor)) {
-                            if (topColor == Color.WHITE){
-                                setColor(GlobalState.selectedColor);
-                                grid.getButton(row - 1, col).setColor(GlobalState.selectedColor);
-                                grid.getButton(row + 1, col).setColor(GlobalState.selectedColor);
-                            } else {
-                                Color local = Color.WHITE;
-                                setColor(local);
-                                grid.getButton(row - 1, col).setColor(local);
-                                grid.getButton(row + 1, col).setColor(local);
-                            }
-                        } else {
-                            System.out.println("Invalid move");
-                        }
-                    } else {
-                        System.out.println("Invalid move (outter)");
-                    }
-                }
-//                return super.touchDown(event, x, y, pointer, button);
-                return false;
-
-            }
-
-
-        });
     }
 
-    public void setColor(Color color) {
-        ImageButtonStyle style = getButtonStyle(color);
-        this.setStyle(style);
+    public int getID(){
+        return this.id;
     }
 
-    private ImageButtonStyle getButtonStyle(Color color) {
-        ImageButtonStyle style = new ImageButtonStyle();
+    public CustomButton(){
+        super(buttonStyle);
 
-        // Set the image of the button based on the color
-        String imagePath;
-        if (color == Color.RED) {
-            imagePath = "red.png";
-        } else if (color == Color.GREEN) {
-            imagePath = "green.png";
-        } else if (color == Color.BLUE) {
-            imagePath = "blue.png";
-        } else if (color == Color.WHITE) {
-            imagePath = "white.png";
-        } else {
-            imagePath = "4.png";
-        }
-
-        Texture texture = new Texture(Gdx.files.internal(imagePath));
-        TextureRegion textureRegion = new TextureRegion(texture);
-
-        style.up = new TextureRegionDrawable(textureRegion);
-        this.selectedColor = color;
-        return style;
     }
 
     @Override
@@ -131,11 +45,8 @@ public class CustomButton extends ImageButton {
         return super.isPressed();
     }
 
-    public boolean isChecked() {
+    public boolean isChecked(Table table) {
         return super.isChecked();
-    }
 
-    public Color getSelectedColor() {
-        return this.selectedColor;
     }
 }
