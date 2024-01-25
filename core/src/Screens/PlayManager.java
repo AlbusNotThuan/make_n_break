@@ -9,22 +9,13 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.makeandbreak.game.MakeAndBreak;
+
+import java.io.FileNotFoundException;
 
 import Classes.Box;
 import Classes.ColorSelector;
@@ -38,7 +29,7 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
     Box box = new Box();
     private Stage stage;
 
-    public PlayManager(MakeAndBreak game) {
+    public PlayManager(MakeAndBreak game) throws FileNotFoundException {
         this.game = game;
         gamecam = new OrthographicCamera();
         gameport = new FitViewport(1520 , 1200, gamecam);
@@ -74,6 +65,7 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         InputProcessor inputProcessor = new InputAdapter(){
             @Override
             public boolean keyDown(int keycode) {
+                grid.checkMatrix();
                 if (keycode == Input.Keys.SPACE){
                     for (int i = 0; i < grid.getRows(); i++) {
                         for (int j = 0; j < grid.getColumns(); j++) {
@@ -91,6 +83,8 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         Multiplexer.addProcessor(inputProcessor);
         Multiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(Multiplexer);
+
+//        grid.Text2Array("example.txt");
     }
 
     @Override

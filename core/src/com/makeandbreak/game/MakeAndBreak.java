@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import java.io.FileNotFoundException;
+
 import Screens.PlayManager;
 import Screens.PlayScreen;
 
@@ -16,7 +18,11 @@ public class MakeAndBreak extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new PlayManager(this));
+		try {
+			setScreen(new PlayManager(this));
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 		shape = new ShapeRenderer();
 	}
 
