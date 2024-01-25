@@ -1,12 +1,17 @@
 package Classes;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.FileHandler;
 
 public class Grid extends Table {
     private CustomButton[][] buttons;
@@ -44,17 +49,26 @@ public class Grid extends Table {
         return false;
     }
 
-//    public void Text2Array(String filepath) throws FileNotFoundException {
-//        File file = new File("Screens/example.txt");
-//        ArrayList<String> result = new ArrayList<>();
-//        Scanner scanner = new Scanner(file);
-//        while (scanner.hasNextLine()){
-//            String line = scanner.nextLine();
-//            result.add(line);
-//        }
-//        for (String line : result){
-//            System.out.println(line);
-//        }
-//    }
+    public void Text2Array() throws FileNotFoundException {
+        ArrayList<String> lines = new ArrayList<String>();
+        FileHandle file = Gdx.files.internal("cards/example.txt");
+        String text = file.readString();
+            BufferedReader reader = new BufferedReader(file.reader());
+
+        String line;
+        try {
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Now 'lines' contains all lines from the file
+        for (String textLine : lines) {
+            System.out.println(textLine);
+        }
+    }
 
 }
