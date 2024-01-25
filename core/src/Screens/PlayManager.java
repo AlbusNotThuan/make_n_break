@@ -84,7 +84,7 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         Multiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(Multiplexer);
 
-//        grid.Text2Array("example.txt");
+        grid.Text2Array();
     }
 
     @Override
