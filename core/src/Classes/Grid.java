@@ -6,15 +6,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.logging.FileHandler;
 
 public class Grid extends Table {
     private CustomButton[][] buttons;
+    public final int COLNUM = 6;
+    public final int ROWNUM = 7;
 
     public CustomButton getButton(int row, int col) {
         if (row >= 0 && row < buttons.length && col >= 0 && col < buttons[row].length) {
@@ -25,31 +24,42 @@ public class Grid extends Table {
     }
     public Grid(){
         super();
-        buttons = new CustomButton[6][6]; // Initialize the array
+        buttons = new CustomButton[ROWNUM][COLNUM]; // Initialize the array
 
         // Create a 6x6 grid of buttons
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 6; j++) {
-                buttons[i][j] = new CustomButton(this,i*6+j);
+        for (int i = 0; i < ROWNUM; i++) {
+            for (int j = 0; j < COLNUM; j++) {
+                buttons[i][j] = new CustomButton(this,i*ROWNUM+j);
                 add(buttons[i][j]).width(80).height(80).pad(5);
             }
             row();
         }
     }
-    public boolean checkMatrix(){
-        ArrayList<Color> currentGrid = new ArrayList<Color>();
+    public boolean checkMatrix() throws FileNotFoundException {
+        ArrayList<String> currentGrid = new ArrayList<String>();
+        ArrayList<String> sampleArray = null;
+        try {
+            sampleArray = Text2Array();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false; // Return false or handle the exception as needed
+        }
         for (CustomButton[] row : buttons){
             for (CustomButton button : row){
-                currentGrid.add(button.selectedColor);
+                currentGrid.add(button.selectedColor.toString());
             }
         }
-        for (Color color : currentGrid){
-            System.out.println(color.toString());
-        }
-        return false;
+
+//        //Print grid
+//        for (Color color : currentGrid){
+//            System.out.println(color.toString());
+//        }
+
+
+        return currentGrid.equals(sampleArray);
     }
 
-    public void Text2Array() throws FileNotFoundException {
+    public ArrayList<String> Text2Array() throws FileNotFoundException {
         ArrayList<String> lines = new ArrayList<String>();
         FileHandle file = Gdx.files.internal("cards/example.txt");
         String text = file.readString();
@@ -65,10 +75,11 @@ public class Grid extends Table {
             e.printStackTrace();
         }
 
-        // Now 'lines' contains all lines from the file
-        for (String textLine : lines) {
-            System.out.println(textLine);
-        }
+//        // Print lines
+//        for (String textLine : lines) {
+//            System.out.println(textLine);
+//        }
+        return lines;
     }
 
 }

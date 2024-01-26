@@ -65,7 +65,15 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         InputProcessor inputProcessor = new InputAdapter(){
             @Override
             public boolean keyDown(int keycode) {
-                grid.checkMatrix();
+                try {
+                    if(grid.checkMatrix()){
+                        System.out.println("Correct");
+                    } else {
+                        System.out.println("Dumbass");
+                    }
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
                 if (keycode == Input.Keys.SPACE){
                     for (int i = 0; i < grid.getRows(); i++) {
                         for (int j = 0; j < grid.getColumns(); j++) {

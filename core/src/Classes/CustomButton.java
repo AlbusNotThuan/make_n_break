@@ -39,11 +39,11 @@ public class CustomButton extends ImageButton {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 boolean wasChecked = !isChecked();
                 Color wasColor = getSelectedColor();
-                int row = id / 6;
-                int col = id % 6;
+                int row = id / grid.ROWNUM;
+                int col = id % grid.ROWNUM;
                 //horizontally
                 if (button == Input.Buttons.RIGHT){
-                    if (col > 0 && col < 5){
+                    if (col > 0 && col < grid.COLNUM - 1){
                         Color rightColor = grid.getButton(row, col + 1).getSelectedColor();
                         Color leftColor = grid.getButton(row, col - 1).getSelectedColor();
                         if ((rightColor == leftColor) && (rightColor == wasColor)){
@@ -55,7 +55,7 @@ public class CustomButton extends ImageButton {
                                 Color local = Color.WHITE;
                                 setColor(local);
                                 grid.getButton(row, col - 1).setColor(local);
-                                grid.getButton(row , col+1).setColor(local);
+                                grid.getButton(row, col + 1).setColor(local);
                             }
                         } else {
                             System.out.println("Invalid move");
@@ -66,7 +66,7 @@ public class CustomButton extends ImageButton {
 
                 }else if (button == Input.Buttons.LEFT){
                     //vertically
-                    if (row > 0 && row < 5) {
+                    if (row > 0 && row < grid.ROWNUM - 1) {
                         Color topColor = grid.getButton(row - 1, col).getSelectedColor();
                         Color bottomColor = grid.getButton(row + 1, col).getSelectedColor();
                         if ((topColor == bottomColor) && (topColor == wasColor)) {
