@@ -17,11 +17,11 @@ public class CustomButton extends ImageButton {
     private boolean clicked;
     private int id;
     private Grid grid;
-    public Color selectedColor = Color.WHITE;
+    public Color selectedColor = Color.YELLOW;
     private static final ImageButtonStyle buttonStyle;
     static {
         //Default Texture
-        Texture texture =  new Texture(Gdx.files.internal("white.png"));
+        Texture texture =  new Texture(Gdx.files.internal("yellow.png"));
         TextureRegion textureRegion = new TextureRegion(texture);
         buttonStyle = new ImageButtonStyle();
         buttonStyle.up =  new TextureRegionDrawable(textureRegion);
@@ -47,12 +47,12 @@ public class CustomButton extends ImageButton {
                         Color rightColor = grid.getButton(row, col + 1).getSelectedColor();
                         Color leftColor = grid.getButton(row, col - 1).getSelectedColor();
                         if ((rightColor == leftColor) && (rightColor == wasColor)){
-                            if (rightColor == Color.WHITE){
+                            if (rightColor == Color.YELLOW){
                                 setColor(GlobalState.selectedColor);
                                 grid.getButton(row, col - 1).setColor(GlobalState.selectedColor);
                                 grid.getButton(row, col + 1).setColor(GlobalState.selectedColor);
                             } else {
-                                Color local = Color.WHITE;
+                                Color local = Color.YELLOW;
                                 setColor(local);
                                 grid.getButton(row, col - 1).setColor(local);
                                 grid.getButton(row, col + 1).setColor(local);
@@ -70,12 +70,12 @@ public class CustomButton extends ImageButton {
                         Color topColor = grid.getButton(row - 1, col).getSelectedColor();
                         Color bottomColor = grid.getButton(row + 1, col).getSelectedColor();
                         if ((topColor == bottomColor) && (topColor == wasColor)) {
-                            if (topColor == Color.WHITE){
+                            if (topColor == Color.YELLOW){
                                 setColor(GlobalState.selectedColor);
                                 grid.getButton(row - 1, col).setColor(GlobalState.selectedColor);
                                 grid.getButton(row + 1, col).setColor(GlobalState.selectedColor);
                             } else {
-                                Color local = Color.WHITE;
+                                Color local = Color.YELLOW;
                                 setColor(local);
                                 grid.getButton(row - 1, col).setColor(local);
                                 grid.getButton(row + 1, col).setColor(local);
@@ -112,10 +112,18 @@ public class CustomButton extends ImageButton {
             imagePath = "green.png";
         } else if (color == Color.BLUE) {
             imagePath = "blue.png";
+        } else if (color == Color.ORANGE) {
+            imagePath = "orange.png";
+        } else if (color == Color.BLACK) {
+            imagePath = "black.png";
+        } else if (color == Color.PURPLE) {
+            imagePath = "purple.png";
+        } else if (color == Color.GRAY) {
+            imagePath = "gray.png";
         } else if (color == Color.WHITE) {
             imagePath = "white.png";
         } else {
-            imagePath = "4.png";
+            imagePath = "yellow.png";
         }
 
         Texture texture = new Texture(Gdx.files.internal(imagePath));

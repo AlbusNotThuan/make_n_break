@@ -8,6 +8,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -33,8 +34,6 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         this.game = game;
         gamecam = new OrthographicCamera();
         gameport = new FitViewport(1520 , 1200, gamecam);
-//        Gdx.input.setInputProcessor(this);
-
         gamecam.setToOrtho(false, 1520,1200);
         gamecam.translate(-760,-600);
 //        gamecam.setToOrtho(false, 1520, 1200);
@@ -47,20 +46,18 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         Button.ButtonStyle style3 = new Button.ButtonStyle();
 
         //Color Selector
-        ColorSelector redSelector = new ColorSelector(Color.RED, "red.png");
-        redSelector.setPosition(-400, 0);
-        redSelector.setSize(80,250);
-        stage.addActor(redSelector);
+        Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE,Color.BLACK, Color.GRAY, Color.PURPLE, Color.WHITE};
 
-        ColorSelector blueSelector = new ColorSelector(Color.BLUE, "blue.png");
-        blueSelector.setPosition(-300,0);
-        blueSelector.setSize(80,250);
-        stage.addActor(blueSelector);
+        for (int i = 0; i < colors.length; i++) {
+            String colorName = getColorName(colors[i]);
+            ColorSelector colorSelector = new ColorSelector(colors[i], colorName + ".png");
+            colorSelector.setPosition(-20 - (i * 100), 0);
+            colorSelector.setSize(80, 250);
+            stage.addActor(colorSelector);
+        }
 
-        ColorSelector greenSelector = new ColorSelector(Color.GREEN, "green.png");
-        greenSelector.setPosition(-500,0);
-        greenSelector.setSize(80,250);
-        stage.addActor(greenSelector);
+
+
 
         InputProcessor inputProcessor = new InputAdapter(){
             @Override
@@ -78,7 +75,7 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
                     for (int i = 0; i < grid.getRows(); i++) {
                         for (int j = 0; j < grid.getColumns(); j++) {
                             CustomButton button = grid.getButton(i, j);
-                            button.setColor(Color.WHITE);
+                            button.setColor(Color.YELLOW);
                         }
                     }
                     return true;
@@ -100,8 +97,34 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
 
     }
 
+    private String getColorName(Color color) {
+        if (Color.RED.equals(color)) {
+            return "red";
+        } else if (Color.BLUE.equals(color)) {
+            return "blue";
+        } else if (Color.GREEN.equals(color)) {
+            return "green";
+        } else if (Color.ORANGE.equals(color)) {
+            return "orange";
+        } else if (Color.BLACK.equals(color)) {
+            return "black";
+        } else if (Color.GRAY.equals(color)) {
+            return "gray";
+        } else if (Color.PURPLE.equals(color)) {
+            return "purple";
+        } else if (Color.WHITE.equals(color)) {
+            return "white";
+        } else {
+            return "unknown";
+        }
+    }
+
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(4/255f, 105/255f, 30/255f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
         //Grid
         stage.setViewport(gameport);
         stage.draw();
