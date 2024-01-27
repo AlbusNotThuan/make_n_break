@@ -41,7 +41,7 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
 //        gamecam.update();
         stage = new Stage();
         Grid grid = new Grid();
-        grid.setPosition(0,100);
+        grid.setPosition(0,30);
         stage.addActor(grid);
         Button.ButtonStyle style3 = new Button.ButtonStyle();
 
@@ -51,8 +51,8 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         for (int i = 0; i < colors.length; i++) {
             String colorName = getColorName(colors[i]);
             ColorSelector colorSelector = new ColorSelector(colors[i], colorName + ".png");
-            colorSelector.setPosition(310 - (i * 100), -500);
-            colorSelector.setSize(80, 250);
+            colorSelector.setPosition(400, i * 90-300); // Adjust these values as needed
+            colorSelector.setSize(250, 80);
             stage.addActor(colorSelector);
         }
 
