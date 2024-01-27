@@ -47,6 +47,7 @@ public class Grid extends Table {
         for (CustomButton[] row : buttons){
             for (CustomButton button : row){
                 currentGrid.add(button.selectedColor.toString());
+                System.out.println(button.selectedColor.toString());
             }
         }
 
