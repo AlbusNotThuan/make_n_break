@@ -11,33 +11,38 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.makeandbreak.game.MakeAndBreak;
 
 import java.io.FileNotFoundException;
 
-import Classes.Box;
 import Classes.ColorSelector;
 import Classes.CustomButton;
 import Classes.Grid;
 import Classes.Quiz;
 
-public class PlayManager extends ApplicationAdapter implements Screen, InputProcessor {
+public class ClassicScreen extends ApplicationAdapter implements Screen, InputProcessor {
     final MakeAndBreak game;
     private OrthographicCamera gamecam;
     private Viewport gameport;
-    Box box = new Box();
     private Stage stage;
     private SpriteBatch batch;
     private Texture img;
     private Quiz quiz = new Quiz();
     private boolean change = true;
-
-    public PlayManager(MakeAndBreak game) throws FileNotFoundException {
+    private BitmapFont font;
+    private float timeCount; // Timer variable
+    private int worldTimer; // Initial timer value in seconds
+    private boolean timeUp; // true when the world timer reaches 0
+    private Label countdownLabel;
+    private Label timeLabel;
+    public ClassicScreen(MakeAndBreak game) throws FileNotFoundException {
         //Gamecam
         this.game = game;
         gamecam = new OrthographicCamera();
@@ -50,7 +55,6 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         Grid grid = new Grid();
         grid.setPosition(0,0);
         stage.addActor(grid);
-        Button.ButtonStyle style3 = new Button.ButtonStyle();
 
         //Color Selector
         Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE,Color.BLACK, Color.GRAY, Color.PURPLE, Color.WHITE};
@@ -70,18 +74,18 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         InputProcessor inputProcessor = new InputAdapter(){
             @Override
             public boolean keyDown(int keycode) {
-                try {
-                    if(grid.checkMatrix(quiz.getQuizFiles()[1])){
-                        System.out.println("Correct");
-                        quiz.currentQuiz = quiz.returnQuiz();
-                        change = true;
-                    } else {
-                        System.out.println("Dumbass");
-                    }
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
                 if (keycode == Input.Keys.SPACE){
+                    try {
+                        if(grid.checkMatrix(quiz.getQuizFiles()[1])){
+                            System.out.println("Correct");
+                            quiz.currentQuiz = quiz.returnQuiz();
+                            change = true;
+                        } else {
+                            System.out.println("Dumbass");
+                        }
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
                     for (int i = 0; i < grid.getRows(); i++) {
                         for (int j = 0; j < grid.getColumns(); j++) {
                             CustomButton button = grid.getButton(i, j);
@@ -104,6 +108,32 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
 
         //Quiz
         batch = new SpriteBatch();
+
+
+        //Timer
+        //define a table used to organize our hud's labels
+        Table table = new Table();
+        table.setPosition(-300,-600);
+        //Top-Align table
+        table.top();
+        //make the table fill the entire stage
+        table.setFillParent(true);
+        // Initialize timer variables
+        worldTimer = 45; // Initial time in seconds
+        timeCount = 0;
+        timeUp = false;
+        //define our labels using the String, and a Label style consisting of a font and color
+        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        //add our labels to our table, padding the top, and giving them all equal width with expandX
+        table.add(timeLabel).expandX().padTop(10);
+        //add a second row to our table
+        table.row();
+        //table.add(scoreLabel).expandX();
+        table.add(countdownLabel).expandX();
+
+        //add our table to the stage
+        stage.addActor(table);
 
     }
 
@@ -142,6 +172,7 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
 
     @Override
     public void render(float delta) {
+        update(delta);
         Gdx.gl.glClearColor(4/255f, 105/255f, 30/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -165,6 +196,24 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         stage.setViewport(gameport);
         stage.draw();
 
+    }
+
+    private void update(float delta) {
+        timeCount += delta;
+        if(timeCount >= 1){
+            if (worldTimer > 0) {
+                worldTimer--;
+            } else {
+                timeUp = true;
+                gameOver();
+            }
+            countdownLabel.setText(String.format("%03d", worldTimer));
+            timeCount = 0;
+        }
+    }
+
+    private void gameOver() {
+        game.setScreen(new GameOverScreen(game));
     }
 
     @Override
