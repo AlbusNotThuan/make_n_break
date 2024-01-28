@@ -10,6 +10,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -22,6 +24,7 @@ import Classes.Box;
 import Classes.ColorSelector;
 import Classes.CustomButton;
 import Classes.Grid;
+import Classes.Quiz;
 
 public class PlayManager extends ApplicationAdapter implements Screen, InputProcessor {
     final MakeAndBreak game;
@@ -29,19 +32,23 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
     private Viewport gameport;
     Box box = new Box();
     private Stage stage;
+    private SpriteBatch batch;
+    private Texture img;
+    private Quiz quiz = new Quiz();
+    private boolean change = true;
 
     public PlayManager(MakeAndBreak game) throws FileNotFoundException {
+        //Gamecam
         this.game = game;
         gamecam = new OrthographicCamera();
         gameport = new FitViewport(1520 , 1200, gamecam);
         gamecam.setToOrtho(false, 1520,1200);
         gamecam.translate(-760,-600);
-//        gamecam.setToOrtho(false, 1520, 1200);
-//        gamecam.position.set(gamecam.viewportWidth / 2, gamecam.viewportHeight / 2, 0);
-//        gamecam.update();
+
+        //Init Stage
         stage = new Stage();
         Grid grid = new Grid();
-        grid.setPosition(0,30);
+        grid.setPosition(0,0);
         stage.addActor(grid);
         Button.ButtonStyle style3 = new Button.ButtonStyle();
 
@@ -51,20 +58,23 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         for (int i = 0; i < colors.length; i++) {
             String colorName = getColorName(colors[i]);
             ColorSelector colorSelector = new ColorSelector(colors[i], colorName + ".png");
-            colorSelector.setPosition(400, i * 90-300); // Adjust these values as needed
+            colorSelector.setPosition(400, i * 90-330); // Adjust these values as needed
             colorSelector.setSize(250, 80);
             stage.addActor(colorSelector);
         }
 
+        //Quiz
+        quiz.returnQuiz();
 
-
-
+        //Handle Input
         InputProcessor inputProcessor = new InputAdapter(){
             @Override
             public boolean keyDown(int keycode) {
                 try {
-                    if(grid.checkMatrix()){
+                    if(grid.checkMatrix(quiz.getQuizFiles()[1])){
                         System.out.println("Correct");
+                        quiz.currentQuiz = quiz.returnQuiz();
+                        change = true;
                     } else {
                         System.out.println("Dumbass");
                     }
@@ -89,7 +99,12 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
         Multiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(Multiplexer);
 
-        grid.Text2Array();
+//        grid.Text2Array();
+
+
+        //Quiz
+        batch = new SpriteBatch();
+
     }
 
     @Override
@@ -120,10 +135,31 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
     }
 
     @Override
+    public void resize(int width, int height) {
+        gameport.update(width, height);
+        gamecam.update();
+    }
+
+    @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(4/255f, 105/255f, 30/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        //Cards
+        batch.begin();
+        if (change) {
+            // Dispose of the old texture
+            if (img != null) {
+                img.dispose();
+            }
+
+            // Load the new texture
+            String[] quizFiles = quiz.getQuizFiles();
+            img = new Texture(quizFiles[0]);
+            change = false;
+        }
+        batch.draw(img, 20, 440, 456, 320);
+        batch.end();
 
         //Grid
         stage.setViewport(gameport);
@@ -132,10 +168,11 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
     }
 
     @Override
-    public void resize(int width, int height) {
-        gameport.update(width, height);
-        gamecam.update();
+    public void create() {
+        img = new Texture(quiz.getQuizFiles()[0]);
+        super.create();
     }
+
 
     @Override
     public void pause() {
@@ -154,7 +191,7 @@ public class PlayManager extends ApplicationAdapter implements Screen, InputProc
 
     @Override
     public void dispose() {
-
+        img.dispose();
     }
 
     @Override

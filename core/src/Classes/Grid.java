@@ -35,11 +35,11 @@ public class Grid extends Table {
             row();
         }
     }
-    public boolean checkMatrix() throws FileNotFoundException {
+    public boolean checkMatrix(String filepath) throws FileNotFoundException {
         ArrayList<String> currentGrid = new ArrayList<String>();
-        ArrayList<String> sampleArray = null;
+        ArrayList<String> answer = null;
         try {
-            sampleArray = Text2Array();
+            answer = Text2Array(filepath);
         } catch (IOException e) {
             e.printStackTrace();
             return false; // Return false or handle the exception as needed
@@ -47,7 +47,7 @@ public class Grid extends Table {
         for (CustomButton[] row : buttons){
             for (CustomButton button : row){
                 currentGrid.add(button.selectedColor.toString());
-                System.out.println(button.selectedColor.toString());
+//                System.out.println(button.selectedColor.toString());
             }
         }
 
@@ -57,12 +57,12 @@ public class Grid extends Table {
 //        }
 
 
-        return currentGrid.equals(sampleArray);
+        return currentGrid.equals(answer);
     }
 
-    public ArrayList<String> Text2Array() throws FileNotFoundException {
+    public ArrayList<String> Text2Array(String filepath) throws FileNotFoundException {
         ArrayList<String> lines = new ArrayList<String>();
-        FileHandle file = Gdx.files.internal("cards/example.txt");
+        FileHandle file = Gdx.files.internal(filepath);
         String text = file.readString();
             BufferedReader reader = new BufferedReader(file.reader());
 
