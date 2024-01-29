@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,8 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.makeandbreak.game.MakeAndBreak;
 
 import java.io.FileNotFoundException;
@@ -27,16 +30,18 @@ import Screens.RuleScreen;
 public class MainMenuScreen extends ScreenAdapter {
     private final MakeAndBreak game;
     private Stage stage;
-    private SpriteBatch batch;
     private BitmapFont font;
-
+    private OrthographicCamera gamecam;
+    private Viewport gameport;
+    private Texture img= new Texture(Gdx.files.internal("anhgame.png"));;
     public MainMenuScreen(MakeAndBreak game) {
         this.game = game;
+        gamecam = new OrthographicCamera();
+        gameport = new FitViewport(1520 , 1200, gamecam);
     }
 
     @Override
     public void show() {
-        batch = new SpriteBatch();
         font = new BitmapFont();
 
 
@@ -104,13 +109,12 @@ public class MainMenuScreen extends ScreenAdapter {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        batch.begin();
-
+//        game.batch.setProjectionMatrix(gamecam.combined);
+        game.batch.begin();
         // Draw the background
-        batch.draw(new Texture(Gdx.files.internal("anhgame.png")), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(img, -0, -0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        batch.end();
+        game.batch.end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
@@ -118,8 +122,14 @@ public class MainMenuScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        batch.dispose();
+        game.batch.dispose();
+        img.dispose();
         font.dispose();
         stage.dispose();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        gameport.update(width, height);
     }
 }

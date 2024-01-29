@@ -22,7 +22,7 @@ import Screens.MainMenuScreen;
 public class GameOverScreen extends ScreenAdapter {
     private final MakeAndBreak game;
     private Stage stage;
-    private SpriteBatch batch;
+    private Texture img = new Texture(Gdx.files.internal("background rule.jpg"));
     private BitmapFont font;
 
     public GameOverScreen(MakeAndBreak game) {
@@ -31,7 +31,7 @@ public class GameOverScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-        batch = new SpriteBatch();
+        game.batch = new SpriteBatch();
         font = new BitmapFont();
 
         stage = new Stage(new ScreenViewport());
@@ -85,12 +85,12 @@ public class GameOverScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.begin();
+        game.batch.begin();
 
         // Draw the background
-        batch.draw(new Texture(Gdx.files.internal("background rule.jpg")), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(img, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        batch.end();
+        game.batch.end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
@@ -98,7 +98,7 @@ public class GameOverScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        batch.dispose();
+        game.batch.dispose();
         font.dispose();
         stage.dispose();
     }

@@ -32,7 +32,6 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
     private OrthographicCamera gamecam;
     private Viewport gameport;
     private Stage stage;
-    private SpriteBatch batch;
     private Texture img;
     private Quiz quiz = new Quiz();
     private boolean change = true;
@@ -46,7 +45,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         //Gamecam
         this.game = game;
         gamecam = new OrthographicCamera();
-        gameport = new FitViewport(1520 , 1200, gamecam);
+        gameport = new FitViewport(game.WIDTH , game.HEIGHT, gamecam);
         gamecam.setToOrtho(false, 1520,1200);
         gamecam.translate(-760,-600);
 
@@ -107,7 +106,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
 
 
         //Quiz
-        batch = new SpriteBatch();
+        game.batch = new SpriteBatch();
 
 
         //Timer
@@ -177,7 +176,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         //Cards
-        batch.begin();
+        game.batch.begin();
         if (change) {
             // Dispose of the old texture
             if (img != null) {
@@ -189,8 +188,8 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
             img = new Texture(quizFiles[0]);
             change = false;
         }
-        batch.draw(img, 20, 440, 456, 320);
-        batch.end();
+        game.batch.draw(img, 20, 440, 456, 320);
+        game.batch.end();
 
         //Grid
         stage.setViewport(gameport);
