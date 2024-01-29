@@ -18,7 +18,6 @@ import com.makeandbreak.game.MakeAndBreak;
 
 public class RuleScreen extends ScreenAdapter {
     private final MakeAndBreak game;
-    private SpriteBatch batch;
     private BitmapFont font;
     private OrthographicCamera camera;
     private Texture backgroundTexture;
@@ -30,7 +29,7 @@ public class RuleScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-        batch = new SpriteBatch();
+        game.batch = new SpriteBatch();
         font = new BitmapFont();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -62,16 +61,16 @@ public class RuleScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.setProjectionMatrix(camera.combined);
+        game.batch.setProjectionMatrix(camera.combined);
 
-        batch.begin();
+        game.batch.begin();
 
         // Draw the background
-        batch.draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         // Draw the rules text
-        font.draw(batch, "Make 'n' Break Rule:", 10, Gdx.graphics.getHeight() - 100);
-        font.draw(batch, "Objective:\n" +
+        font.draw(game.batch, "Make 'n' Break Rule:", 10, Gdx.graphics.getHeight() - 100);
+        font.draw(game.batch, "Objective:\n" +
                 "The goal of Make 'n' Break is to earn points by successfully recreating various structures within a specified time limit.\n" +
                 "\n" +
                 "Gameplay:\n" +
@@ -90,7 +89,7 @@ public class RuleScreen extends ScreenAdapter {
                 "The game typically consists of several rounds.\n" +
                 "The player or team with the highest total score at the end of the agreed-upon number of rounds wins.", 30, Gdx.graphics.getHeight() - 120);
 
-        batch.end();
+        game.batch.end();
 
         // Draw the stage (UI elements)
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -99,7 +98,7 @@ public class RuleScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        batch.dispose();
+        game.batch.dispose();
         font.dispose();
         backgroundTexture.dispose();  // Dispose of the background texture
         stage.dispose();
