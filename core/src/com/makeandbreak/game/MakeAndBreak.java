@@ -14,13 +14,15 @@ import Screens.MainMenuScreen;
 public class MakeAndBreak extends Game {
 	public SpriteBatch batch;
 	public ShapeRenderer shape;
-	public int WIDTH = Gdx.graphics.getWidth();
-	public int HEIGHT = Gdx.graphics.getHeight();
+	public int WIDTH;
+	public int HEIGHT;
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		setScreen(new MainMenuScreen(this));
 		shape = new ShapeRenderer();
+		WIDTH = Gdx.graphics.getWidth();
+		HEIGHT= Gdx.graphics.getHeight();
 	}
 
 	@Override
