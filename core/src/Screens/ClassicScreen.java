@@ -112,7 +112,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         //Timer
         //define a table used to organize our hud's labels
         Table table = new Table();
-        table.setPosition(-300,-600);
+        table.setPosition(-600,-400);
         //Top-Align table
         table.top();
         //make the table fill the entire stage
@@ -188,7 +188,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
             img = new Texture(quizFiles[0]);
             change = false;
         }
-        game.batch.draw(img, 20, 440, 456, 320);
+        game.batch.draw(img, 420, 350, 456/4*3, 320/4*3);
         game.batch.end();
 
         //Grid
