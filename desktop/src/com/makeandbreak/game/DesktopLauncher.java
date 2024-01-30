@@ -13,6 +13,7 @@ public class DesktopLauncher {
 		config.setWindowedMode(dm.width/7*3, dm.height/5*3);
 		config.setForegroundFPS(60);
 		config.setTitle("MakeAndBreak");
+		config.setResizable(false);
 		new Lwjgl3Application(new MakeAndBreak(), config);
 	}
 }

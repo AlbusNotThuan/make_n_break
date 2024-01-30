@@ -70,11 +70,6 @@ public class GameOverScreen extends ScreenAdapter {
 
         style.fontColor = null;
 
-        TextButton buttonn = new TextButton(text, style);
-        buttonn.setPosition(x, y);
-        buttonn.setWidth(200);
-        buttonn.setHeight(40);
-
         return button;
     }
 

@@ -50,7 +50,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
         // Create buttons
         TextButton classicButton = createButton("Classic", 300, Gdx.graphics.getHeight() -350);
-        TextButton multiplayerButton = createButton("Multiplayer", 300, Gdx.graphics.getHeight() - 400);
+        //TextButton multiplayerButton = createButton("Multiplayer", 300, Gdx.graphics.getHeight() - 400);
         TextButton ruleButton = createButton("Rule", 300, Gdx.graphics.getHeight() - 450);
 
         // Add click listeners to the buttons
@@ -65,12 +65,12 @@ public class MainMenuScreen extends ScreenAdapter {
             }
         });
 
-        multiplayerButton.addListener(new ClickListener() {
+        /*multiplayerButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new MultiplayerScreen(game));
             }
-        });
+        });*/
 
         ruleButton.addListener(new ClickListener() {
             @Override
@@ -81,7 +81,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
         // Add buttons to the stage
         stage.addActor(classicButton);
-        stage.addActor(multiplayerButton);
+        //stage.addActor(multiplayerButton);
         stage.addActor(ruleButton);
     }
 
