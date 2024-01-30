@@ -26,6 +26,7 @@ import java.io.FileNotFoundException;
 import Classes.ColorSelector;
 import Classes.CustomButton;
 import Classes.Grid;
+import Classes.Player;
 import Classes.Quiz;
 
 public class ClassicScreen extends ApplicationAdapter implements Screen, InputProcessor {
@@ -42,6 +43,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
     private boolean timeUp; // true when the world timer reaches 0
     private Label countdownLabel;
     private Label timeLabel;
+    private final Player player1 = new Player();
     public ClassicScreen(MakeAndBreak game) throws FileNotFoundException {
         //Gamecam
         this.game = game;
@@ -80,6 +82,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
                             System.out.println("Correct");
                             quiz.currentQuiz = quiz.returnQuiz();
                             change = true;
+                            player1.setPoints();
                         } else {
                             System.out.println("Dumbass");
                         }
