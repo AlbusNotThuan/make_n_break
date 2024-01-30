@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -124,7 +125,11 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         //define our labels using the String, and a Label style consisting of a font and color
         countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        //add our labels to our table, padding the top, and giving them all equal width with expandX
+        //add our labels to our table, padding the top, and giving them all equal width with
+        Group group = new Group();
+        group.addActor(countdownLabel);
+        group.addActor(timeLabel);
+        group.scaleBy(2f,2f);
         table.add(timeLabel).expandX().padTop(10);
         //add a second row to our table
         table.row();
