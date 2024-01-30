@@ -113,23 +113,25 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         //Timer
         //define a table used to organize our hud's labels
         Table table = new Table();
-        table.setPosition(-600,-400);
+        table.setPosition(-700,-350);
         //Top-Align table
         table.top();
         //make the table fill the entire stage
         table.setFillParent(true);
         // Initialize timer variables
-        worldTimer = 45; // Initial time in seconds
+        worldTimer = 180; // Initial time in seconds
         timeCount = 0;
         timeUp = false;
         //define our labels using the String, and a Label style consisting of a font and color
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        countdownLabel = new Label(String.format("%02d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        countdownLabel.setFontScale(3);
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        timeLabel.setFontScale(3);
         //add our labels to our table, padding the top, and giving them all equal width with
         Group group = new Group();
         group.addActor(countdownLabel);
         group.addActor(timeLabel);
-        group.scaleBy(2f,2f);
+        //group.scaleBy(2f,2f);
         table.add(timeLabel).expandX().padTop(10);
         //add a second row to our table
         table.row();
@@ -211,7 +213,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
                 timeUp = true;
                 gameOver();
             }
-            countdownLabel.setText(String.format("%03d", worldTimer));
+            countdownLabel.setText(String.format("%02d", worldTimer));
             timeCount = 0;
         }
     }
