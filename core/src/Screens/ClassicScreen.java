@@ -46,13 +46,13 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         this.game = game;
         gamecam = new OrthographicCamera();
         gameport = new FitViewport(game.WIDTH , game.HEIGHT, gamecam);
-        gamecam.setToOrtho(false, 1520,1200);
-        gamecam.translate(-760,-600);
+        gamecam.setToOrtho(false, game.WIDTH,game.HEIGHT);
+        gamecam.translate(-game.WIDTH/2,-game.HEIGHT/2);
 
         //Init Stage
         stage = new Stage();
         Grid grid = new Grid();
-        grid.setPosition(0,0);
+        grid.setPosition(-200,-100);
         stage.addActor(grid);
 
         //Color Selector
@@ -61,8 +61,8 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         for (int i = 0; i < colors.length; i++) {
             String colorName = getColorName(colors[i]);
             ColorSelector colorSelector = new ColorSelector(colors[i], colorName + ".png");
-            colorSelector.setPosition(400, i * 90-330); // Adjust these values as needed
-            colorSelector.setSize(250, 80);
+            colorSelector.setPosition(30 + i%4*75, -300 + i/4*140); // Adjust these values as needed
+            colorSelector.setSize(50, 120);
             stage.addActor(colorSelector);
         }
 

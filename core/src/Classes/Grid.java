@@ -30,7 +30,7 @@ public class Grid extends Table {
         for (int i = 0; i < ROWNUM; i++) {
             for (int j = 0; j < COLNUM; j++) {
                 buttons[i][j] = new CustomButton(this,i*ROWNUM+j);
-                add(buttons[i][j]).width(80).height(80).pad(5);
+                add(buttons[i][j]).width(50).height(50).pad(5);
             }
             row();
         }
