@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.io.FileNotFoundException;
 
+import Screens.BufferScreen;
 import Screens.ClassicScreen;
 import Screens.MainMenuScreen;
 
