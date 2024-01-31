@@ -47,7 +47,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
     private Label scoreLabel;
     private Label scoreCountLabel;
     private Music music;
-    private Sound clicksound;
+    private Sound cor_sound,fal_sound,vic_sound;
     public ClassicScreen(MakeAndBreak game) throws FileNotFoundException {
         //Gamecam
         this.game = game;
@@ -57,14 +57,15 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         gamecam.translate(-game.WIDTH/2,-game.HEIGHT/2);
 
         //music
-        music = Gdx.audio.newMusic(Gdx.files.internal("mainmenu_msc.mp3"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("playscreen_msc.mp3"));
         music.setLooping(true);
         music.setVolume(0.5f);
         music.play();
 
         //sound
-        clicksound=Gdx.audio.newSound(Gdx.files.internal("clicksound.mp3"));
-
+        cor_sound=Gdx.audio.newSound(Gdx.files.internal("correct_sound.mp3"));
+        fal_sound=Gdx.audio.newSound(Gdx.files.internal("false_sound.mp3"));
+        vic_sound=Gdx.audio.newSound(Gdx.files.internal("victory.mp3"));
         //Init Stage
         stage = new Stage();
         Grid grid = new Grid();
@@ -89,18 +90,20 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         InputProcessor inputProcessor = new InputAdapter(){
             @Override
             public boolean keyDown(int keycode) {
-                if (keycode == Input.Keys.E){
+                /*if (keycode == Input.Keys.E){
                     gameOver();
-                }
+                }*/
                 if (keycode == Input.Keys.SPACE){
                     try {
                         if(grid.checkMatrix(quiz.getQuizFiles()[1])){
                             System.out.println("Correct");
+                            cor_sound.play();
                             quiz.currentQuiz = quiz.returnQuiz();
                             change = true;
                             addScore(3);
                         } else {
                             System.out.println("TryAgain");
+                            fal_sound.play();
                         }
                     } catch (FileNotFoundException e) {
                         throw new RuntimeException(e);
@@ -134,7 +137,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         //make the table fill the entire stage
         table.setFillParent(true);
         // Initialize timer variables
-        worldTimer = 0; // Initial time in seconds
+        worldTimer = 20; // Initial time in seconds
         timeCount = 0;
         score =0;
 
@@ -233,6 +236,8 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
             if (worldTimer > 0) {
                 worldTimer--;
             } else {
+                music.stop();
+                vic_sound.play();
                 gameOver();
             }
             countdownLabel.setText(String.format("%03d", worldTimer));
