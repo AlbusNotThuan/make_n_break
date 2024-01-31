@@ -16,16 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.*;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.makeandbreak.game.MakeAndBreak;
 
 import java.io.FileNotFoundException;
-
-import Screens.ClassicScreen;
-import Screens.MultiplayerScreen;
-import Screens.RuleScreen;
-
 
 public class MainMenuScreen extends ScreenAdapter {
     private final MakeAndBreak game;
@@ -43,18 +37,16 @@ public class MainMenuScreen extends ScreenAdapter {
     @Override
     public void show() {
         font = new BitmapFont();
-
-
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
         // Create buttons
-        TextButton classicButton = createButton("Classic", 300, Gdx.graphics.getHeight() -350);
-        //TextButton multiplayerButton = createButton("Multiplayer", 300, Gdx.graphics.getHeight() - 400);
-        TextButton ruleButton = createButton("Rule", 300, Gdx.graphics.getHeight() - 450);
+        TextButton playButton = createButton("Play", 300, Gdx.graphics.getHeight() -350);
+
+        TextButton ruleButton = createButton("Rule", 300, Gdx.graphics.getHeight() - 400);
 
         // Add click listeners to the buttons
-        classicButton.addListener(new ClickListener() {
+        playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 try {
@@ -65,13 +57,6 @@ public class MainMenuScreen extends ScreenAdapter {
             }
         });
 
-        /*multiplayerButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MultiplayerScreen(game));
-            }
-        });*/
-
         ruleButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -80,8 +65,7 @@ public class MainMenuScreen extends ScreenAdapter {
         });
 
         // Add buttons to the stage
-        stage.addActor(classicButton);
-        //stage.addActor(multiplayerButton);
+        stage.addActor(playButton);
         stage.addActor(ruleButton);
     }
 
@@ -97,11 +81,6 @@ public class MainMenuScreen extends ScreenAdapter {
 
         style.fontColor = null;
 
-        /*TextButton buttonn = new TextButton(text, style);
-        buttonn.setPosition(x, y);
-        buttonn.setWidth(200);
-        buttonn.setHeight(40);*/
-
         return button;
     }
 
@@ -109,7 +88,7 @@ public class MainMenuScreen extends ScreenAdapter {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//        game.batch.setProjectionMatrix(gamecam.combined);
+
         game.batch.begin();
         // Draw the background
         game.batch.draw(img, -0, -0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
