@@ -2,8 +2,6 @@ package Screens;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
@@ -15,6 +13,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -27,6 +26,7 @@ import java.io.FileNotFoundException;
 import Classes.ColorSelector;
 import Classes.CustomButton;
 import Classes.Grid;
+import Classes.Player;
 import Classes.Quiz;
 
 public class ClassicScreen extends ApplicationAdapter implements Screen, InputProcessor {
@@ -40,14 +40,11 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
 
     private BitmapFont font;
     private float timeCount; // Timer variable
-    private static Integer score;
     private int worldTimer; // Initial timer value in seconds
+    private boolean timeUp; // true when the world timer reaches 0
     private Label countdownLabel;
     private Label timeLabel;
-    private Label scoreLabel;
-    private Label scoreCountLabel;
-    private Music music;
-    private Sound cor_sound,fal_sound,vic_sound;
+    private final Player player1 = new Player();
     public ClassicScreen(MakeAndBreak game) throws FileNotFoundException {
         //Gamecam
         this.game = game;
@@ -56,21 +53,10 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         gamecam.setToOrtho(false, game.WIDTH,game.HEIGHT);
         gamecam.translate(-game.WIDTH/2,-game.HEIGHT/2);
 
-        //music
-        music = Gdx.audio.newMusic(Gdx.files.internal("playscreen_msc.mp3"));
-        music.setLooping(true);
-        music.setVolume(0.8f);
-        music.play();
-
-        //sound
-        cor_sound=Gdx.audio.newSound(Gdx.files.internal("correct_sound.mp3"));
-        fal_sound=Gdx.audio.newSound(Gdx.files.internal("false_sound.mp3"));
-        vic_sound=Gdx.audio.newSound(Gdx.files.internal("victory.mp3"));
-
         //Init Stage
         stage = new Stage();
         Grid grid = new Grid();
-        grid.setPosition(-200,-75);
+        grid.setPosition(-200,-100);
         stage.addActor(grid);
 
         //Color Selector
@@ -91,20 +77,15 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         InputProcessor inputProcessor = new InputAdapter(){
             @Override
             public boolean keyDown(int keycode) {
-                /*if (keycode == Input.Keys.E){
-                    gameOver();
-                }*/
                 if (keycode == Input.Keys.SPACE){
                     try {
                         if(grid.checkMatrix(quiz.getQuizFiles()[1])){
                             System.out.println("Correct");
-                            cor_sound.play(0.7f);
                             quiz.currentQuiz = quiz.returnQuiz();
                             change = true;
-                            addScore(10);
+                            player1.setPoints();
                         } else {
-                            System.out.println("TryAgain");
-                            fal_sound.play();
+                            System.out.println("Dumbass");
                         }
                     } catch (FileNotFoundException e) {
                         throw new RuntimeException(e);
@@ -120,61 +101,57 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
                 return false;
             }
         };
-
         InputMultiplexer Multiplexer = new InputMultiplexer();
         Multiplexer.addProcessor(stage);
         Multiplexer.addProcessor(inputProcessor);
         Multiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(Multiplexer);
 
+//        grid.Text2Array();
+
+
         //Quiz
         game.batch = new SpriteBatch();
 
-        //Timer and score
-        //define a table used to organize hud's labels
+
+        //Timer
+        //define a table used to organize our hud's labels
         Table table = new Table();
-        table.setPosition(0,-400);
+        table.setPosition(-700,-350);
         //Top-Align table
         table.top();
         //make the table fill the entire stage
         table.setFillParent(true);
         // Initialize timer variables
-        worldTimer = 90; // Initial time in seconds
+        worldTimer = 180; // Initial time in seconds
         timeCount = 0;
-        score = 0;
-
+        timeUp = false;
         //load font
-        font=new BitmapFont(Gdx.files.internal("horizon.fnt"));
-
+        font=new BitmapFont(Gdx.files.internal("normalFont_1.fnt"));
         //define our labels using the String, and a Label style consisting of a font and color
-
-        timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.GOLD));
-        timeLabel.setFontScale(0.7f);
-
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font, Color.GOLD));
-        countdownLabel.setFontScale(0.85f);
-
-        scoreLabel = new Label("SCORE", new Label.LabelStyle(font, Color.GOLD));
-        scoreLabel.setFontScale(0.7f);
-
-        scoreCountLabel=new Label(String.format("%03d", score), new Label.LabelStyle(font, Color.GOLD));
-        scoreCountLabel.setFontScale(0.85f);
-
+        countdownLabel = new Label(String.format("%02d", worldTimer), new Label.LabelStyle(font, Color.BLACK));
+        //countdownLabel.setFontScale(3);
+        timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.BLACK));
+        //timeLabel.setFontScale(3);
         //add our labels to our table, padding the top, and giving them all equal width with
-        table.add(timeLabel).expandX().padRight(50);
-        table.add(scoreLabel).expandX().padRight(1200);
-
-        table.row();//add a second row to our table
-
-        table.add(countdownLabel).expandX().padRight(50);
-        table.add(scoreCountLabel).expandX().padRight(1200);
+        Group group = new Group();
+        group.addActor(countdownLabel);
+        group.addActor(timeLabel);
+        //group.scaleBy(2f,2f);
+        table.add(timeLabel).expandX().padTop(10);
+        //add a second row to our table
+        table.row();
+        //table.add(scoreLabel).expandX();
+        table.add(countdownLabel).expandX();
 
         //add our table to the stage
         stage.addActor(table);
-    }
 
+    }
+    //public BitmapFont getFont(){return font;}
     @Override
     public void show() {
+
     }
 
     private String getColorName(Color color) {
@@ -208,9 +185,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
     @Override
     public void render(float delta) {
         update(delta);
-
-        //main screen color ( Navy blue )
-        Gdx.gl.glClearColor(0/255f, 0/255f, 128/255f, 1);
+        Gdx.gl.glClearColor(4/255f, 105/255f, 30/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         //Cards
@@ -242,23 +217,16 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
             if (worldTimer > 0) {
                 worldTimer--;
             } else {
-                music.stop();
-                vic_sound.play();
+                timeUp = true;
                 gameOver();
             }
-            countdownLabel.setText(String.format("%03d", worldTimer));
+            countdownLabel.setText(String.format("%02d", worldTimer));
             timeCount = 0;
         }
     }
 
-    public void addScore(int value){
-        score += value;
-        scoreCountLabel.setText(String.format("%03d", score));
-    }
-
     private void gameOver() {
-        music.stop();
-        game.setScreen(new GameOverScreen(game,score));
+        game.setScreen(new GameOverScreen(game));
     }
 
     @Override
