@@ -25,7 +25,7 @@ public class RuleScreen extends ScreenAdapter {
     private Texture backgroundTexture;
     private Stage stage;
     private Music music;
-    private Sound clicksound,cor_sound,fal_sound;
+    private Sound clicksound;
 
     public RuleScreen(MakeAndBreak game) {
         this.game = game;
@@ -48,7 +48,7 @@ public class RuleScreen extends ScreenAdapter {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         // Load the background texture
-        backgroundTexture = new Texture("blueBackground.jpg");  // Replace with your background image
+        backgroundTexture = new Texture("yellow.png");  // Replace with your background image
 
         // Create the stage for UI elements
         stage = new Stage(new ScreenViewport());
