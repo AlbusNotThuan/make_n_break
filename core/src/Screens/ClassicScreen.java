@@ -127,14 +127,14 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
 
         //define our labels using the String, and a Label style consisting of a font and color
 
-        timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.MAROON));
+        timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.GOLD));
         timeLabel.setFontScale(0.7f);
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font, Color.MAROON));
-
-        scoreLabel = new Label("SCORE", new Label.LabelStyle(font, Color.MAROON));
+        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font, Color.GOLD));
+        countdownLabel.setFontScale(0.85f);
+        scoreLabel = new Label("SCORE", new Label.LabelStyle(font, Color.GOLD));
         scoreLabel.setFontScale(0.7f);
-        scoreCountLabel=new Label(String.format("%03d", score), new Label.LabelStyle(font, Color.MAROON));
-
+        scoreCountLabel=new Label(String.format("%03d", score), new Label.LabelStyle(font, Color.GOLD));
+        scoreCountLabel.setFontScale(0.85f);
         //add our labels to our table, padding the top, and giving them all equal width with
         table.add(timeLabel).expandX().padRight(50);
         table.add(scoreLabel).expandX().padRight(1200);
@@ -184,7 +184,8 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
     public void render(float delta) {
         update(delta);
         //Gdx.gl.glClearColor(4/255f, 105/255f, 30/255f, 1);
-        Gdx.gl.glClearColor(223/255f, 207/255f, 207/255f, 1);
+        //Gdx.gl.glClearColor(223/255f, 207/255f, 207/255f, 1);
+        Gdx.gl.glClearColor(0/255f, 0/255f, 128/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         //Cards
