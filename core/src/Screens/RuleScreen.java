@@ -1,6 +1,8 @@
 package Screens;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
@@ -22,6 +24,8 @@ public class RuleScreen extends ScreenAdapter {
     private OrthographicCamera camera;
     private Texture backgroundTexture;
     private Stage stage;
+    private Music music;
+    private Sound clicksound;
 
     public RuleScreen(MakeAndBreak game) {
         this.game = game;
@@ -29,6 +33,15 @@ public class RuleScreen extends ScreenAdapter {
 
     @Override
     public void show() {
+        //music
+        music = Gdx.audio.newMusic(Gdx.files.internal("mainmenu_msc.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
+
+        //sound
+        clicksound=Gdx.audio.newSound(Gdx.files.internal("clicksound.mp3"));
+
         game.batch = new SpriteBatch();
         font=new BitmapFont(Gdx.files.internal("ruleFont.fnt"));
         camera = new OrthographicCamera();
@@ -48,6 +61,7 @@ public class RuleScreen extends ScreenAdapter {
         returnButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                clicksound.play();
                 game.setScreen(new MainMenuScreen(game));
             }
         });
