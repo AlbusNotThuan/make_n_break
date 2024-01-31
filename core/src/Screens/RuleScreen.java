@@ -43,12 +43,12 @@ public class RuleScreen extends ScreenAdapter {
         clicksound=Gdx.audio.newSound(Gdx.files.internal("clicksound.mp3"));
 
         game.batch = new SpriteBatch();
-        font=new BitmapFont(Gdx.files.internal("ruleFont.fnt"));
+        font = new BitmapFont(Gdx.files.internal("ruleFont.fnt"));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         // Load the background texture
-        backgroundTexture = new Texture("background rule.jpg");  // Replace with your background image
+        backgroundTexture = new Texture("blueBackground.jpg");  // Replace with your background image
 
         // Create the stage for UI elements
         stage = new Stage(new ScreenViewport());
@@ -89,18 +89,18 @@ public class RuleScreen extends ScreenAdapter {
                 "The goal of Make 'n' Break is to earn points by successfully recreating various \nstructures within a specified time limit.\n" +
                 "\n" +
                 "Gameplay:\n" +
-                "The game is played in rounds.\n" +
-                "At the start of each round, a player flips the top card from the stack to reveal \na structure that needs to be replicated.\n" +
-                "All players or teams simultaneously attempt to build the structure shown on \nthe card using their building blocks.\n" +
+                "In this implementation, each player would take turn to play the game \nand receive a score\n" +
+                "In each game, a card from the stack reveals to the player a structure that \nneeds to be replicated.\n" +
+                "The player attempt to build the structure shown on the card \nusing building blocks on the side.\n" +
+                "If the built structure is correct, the next card will be drawn\n" +
                 "The round ends when the timer runs out.\n" +
                 "\n" +
                 "Scoring:\n" +
-                "Players score points based on the accuracy and completeness of their structures.\n" +
-                "If a player or team successfully replicates the structure, they score full points \nindicated on the card.\n" +
-                "Incomplete or inaccurate structures may earn zero point.\n" +
+                "Players score 3 points if successfully replicates the structure\n" +
                 "No points are awarded for structures that are significantly different \nfrom the target.\n" +
+                "You must replicated exactly the structure shown to get a new card" +
                 "\n" +
-                "Winning:\n" +
+                "\nWinning:\n" +
                 "The game typically consists of several rounds.\n" +
                 "The player or team with the highest total score at the end of three rounds wins.", 30, Gdx.graphics.getHeight() - 75);
 
@@ -113,7 +113,6 @@ public class RuleScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        game.batch.dispose();
         font.dispose();
         backgroundTexture.dispose();  // Dispose of the background texture
         stage.dispose();
