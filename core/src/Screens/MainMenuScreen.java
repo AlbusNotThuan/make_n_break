@@ -2,8 +2,6 @@ package Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -29,8 +27,6 @@ public class MainMenuScreen extends ScreenAdapter {
     private BitmapFont font;
     private OrthographicCamera gamecam;
     private Viewport gameport;
-    private Music music;
-    private Sound clicksound;
     private Texture img= new Texture(Gdx.files.internal("anhgame.png"));;
     public MainMenuScreen(MakeAndBreak game) {
         this.game = game;
@@ -40,47 +36,30 @@ public class MainMenuScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-        //music
-        music = Gdx.audio.newMusic(Gdx.files.internal("mainmenu_msc.mp3"));
-        music.setLooping(true);
-        music.setVolume(0.5f);
-        music.play();
-
-        //sound
-        clicksound=Gdx.audio.newSound(Gdx.files.internal("clicksound.mp3"));
-
         font = new BitmapFont();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
         // Create buttons
         TextButton playButton = createButton("Play", 300, Gdx.graphics.getHeight() -350);
-        TextButton controlButton = createButton("Control", 300, game.HEIGHT - 450);
+
         TextButton ruleButton = createButton("Rule", 300, Gdx.graphics.getHeight() - 400);
 
         // Add click listeners to the buttons
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                music.stop();
-                clicksound.play();
-                game.setScreen(new BufferScreen((MakeAndBreak) game));
+                try {
+                    game.setScreen(new ClassicScreen((MakeAndBreak) game));
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
-        controlButton.addListener(new ClickListener(){
 
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                music.stop();
-                clicksound.play();
-                game.setScreen(new ControlScreen(game));
-            }
-        });
         ruleButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                music.stop();
-                clicksound.play();
                 game.setScreen(new RuleScreen(game));
             }
         });
@@ -88,7 +67,6 @@ public class MainMenuScreen extends ScreenAdapter {
         // Add buttons to the stage
         stage.addActor(playButton);
         stage.addActor(ruleButton);
-        stage.addActor(controlButton);
     }
 
     private TextButton createButton(String text, float x, float y) {
