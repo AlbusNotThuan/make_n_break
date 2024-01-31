@@ -20,10 +20,10 @@ public class MakeAndBreak extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new MainMenuScreen(this));
 		shape = new ShapeRenderer();
 		WIDTH = Gdx.graphics.getWidth();
 		HEIGHT= Gdx.graphics.getHeight();
+		setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
