@@ -19,7 +19,7 @@ import com.makeandbreak.game.MakeAndBreak;
 public class GameOverScreen extends ScreenAdapter {
     private final MakeAndBreak game;
     private Stage stage;
-    private Texture img = new Texture(Gdx.files.internal("background rule.jpg"));
+    private Texture img = new Texture(Gdx.files.internal("endscreen_img.png"));
     private BitmapFont font,font1;
     private int score;
     private Label scoreCountLabel;
@@ -39,7 +39,7 @@ public class GameOverScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
 
         // Create title label
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.RED);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.GOLD);
 
         Label titleLabel = new Label("Game Over", labelStyle);
         titleLabel.setPosition(Gdx.graphics.getWidth() / 2 - titleLabel.getWidth() / 2 , Gdx.graphics.getHeight() / 2 + 100);
@@ -89,6 +89,7 @@ public class GameOverScreen extends ScreenAdapter {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
         game.batch.begin();
 
