@@ -40,10 +40,13 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
 
     private BitmapFont font;
     private float timeCount; // Timer variable
+    private static Integer score;
     private int worldTimer; // Initial timer value in seconds
-    private boolean timeUp; // true when the world timer reaches 0
+    //private boolean timeUp; // true when the world timer reaches 0
     private Label countdownLabel;
     private Label timeLabel;
+    private Label scoreLabel;
+    private Label scoreCountLabel;
     private final Player player1 = new Player();
     public ClassicScreen(MakeAndBreak game) throws FileNotFoundException {
         //Gamecam
@@ -56,7 +59,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         //Init Stage
         stage = new Stage();
         Grid grid = new Grid();
-        grid.setPosition(-200,-100);
+        grid.setPosition(-200,-75);
         stage.addActor(grid);
 
         //Color Selector
@@ -117,32 +120,33 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         //Timer
         //define a table used to organize our hud's labels
         Table table = new Table();
-        table.setPosition(-700,-350);
+        table.setPosition(0,-400);
         //Top-Align table
         table.top();
         //make the table fill the entire stage
         table.setFillParent(true);
         // Initialize timer variables
-        worldTimer = 180; // Initial time in seconds
+        worldTimer = 20; // Initial time in seconds
         timeCount = 0;
-        timeUp = false;
+        score =0;
+        //timeUp = false;
         //load font
-        font=new BitmapFont(Gdx.files.internal("normalFont_1.fnt"));
+        font=new BitmapFont(Gdx.files.internal("horizon.fnt"));
         //define our labels using the String, and a Label style consisting of a font and color
-        countdownLabel = new Label(String.format("%02d", worldTimer), new Label.LabelStyle(font, Color.BLACK));
-        //countdownLabel.setFontScale(3);
-        timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.BLACK));
-        //timeLabel.setFontScale(3);
+        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font, Color.WHITE));
+        timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
+        timeLabel.setFontScale(0.7f);
+        scoreLabel = new Label("SCORE", new Label.LabelStyle(font, Color.WHITE));
+        scoreLabel.setFontScale(0.7f);
+        scoreCountLabel=new Label(String.format("%03d", player1.getPoints()), new Label.LabelStyle(font, Color.WHITE));
+
         //add our labels to our table, padding the top, and giving them all equal width with
-        Group group = new Group();
-        group.addActor(countdownLabel);
-        group.addActor(timeLabel);
-        //group.scaleBy(2f,2f);
-        table.add(timeLabel).expandX().padTop(10);
+        table.add(timeLabel).expandX().padRight(50);
+        table.add(scoreLabel).expandX().padRight(1200);
         //add a second row to our table
         table.row();
-        //table.add(scoreLabel).expandX();
-        table.add(countdownLabel).expandX();
+        table.add(countdownLabel).expandX().padRight(50);
+        table.add(scoreCountLabel).expandX().padRight(1200);
 
         //add our table to the stage
         stage.addActor(table);
@@ -217,10 +221,10 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
             if (worldTimer > 0) {
                 worldTimer--;
             } else {
-                timeUp = true;
+                //timeUp = true;
                 gameOver();
             }
-            countdownLabel.setText(String.format("%02d", worldTimer));
+            countdownLabel.setText(String.format("%03d", worldTimer));
             timeCount = 0;
         }
     }

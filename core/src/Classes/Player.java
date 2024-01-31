@@ -9,11 +9,11 @@ public class Player {
     public Player(){
 
     }
-
-    public int getPoints() {
-        return points;
-    }
     public void setPoints(){
         this.points = this.points + 3;
     }
+    public int getPoints() {
+        return points;
+    }
+
 }
