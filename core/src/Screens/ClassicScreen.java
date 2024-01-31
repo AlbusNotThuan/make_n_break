@@ -37,6 +37,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
     private Texture img;
     private Quiz quiz = new Quiz();
     private boolean change = true;
+
     private BitmapFont font;
     private float timeCount; // Timer variable
     private int worldTimer; // Initial timer value in seconds
@@ -125,10 +126,12 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         worldTimer = 180; // Initial time in seconds
         timeCount = 0;
         timeUp = false;
+        //load font
+        font=new BitmapFont(Gdx.files.internal("Horizon.otf"));
         //define our labels using the String, and a Label style consisting of a font and color
-        countdownLabel = new Label(String.format("%02d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        countdownLabel = new Label(String.format("%02d", worldTimer), new Label.LabelStyle(font, Color.WHITE));
         countdownLabel.setFontScale(3);
-        timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
         timeLabel.setFontScale(3);
         //add our labels to our table, padding the top, and giving them all equal width with
         Group group = new Group();
@@ -145,7 +148,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         stage.addActor(table);
 
     }
-
+    //public BitmapFont getFont(){return font;}
     @Override
     public void show() {
 
@@ -198,6 +201,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
             img = new Texture(quizFiles[0]);
             change = false;
         }
+
         game.batch.draw(img, 420, 350, 456/4*3, 320/4*3);
         game.batch.end();
 
@@ -250,6 +254,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
     @Override
     public void dispose() {
         img.dispose();
+        font.dispose();
     }
 
     @Override
