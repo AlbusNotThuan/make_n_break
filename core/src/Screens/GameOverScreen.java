@@ -1,7 +1,7 @@
 package Screens;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -14,37 +14,47 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.*;
 import com.makeandbreak.game.MakeAndBreak;
-
-import Screens.MainMenuScreen;
 
 public class GameOverScreen extends ScreenAdapter {
     private final MakeAndBreak game;
     private Stage stage;
     private Texture img = new Texture(Gdx.files.internal("background rule.jpg"));
-    private BitmapFont font;
+    private BitmapFont font,font1;
+    private int score;
+    private Label scoreCountLabel;
 
-    public GameOverScreen(MakeAndBreak game) {
+    public GameOverScreen(MakeAndBreak game, int score) {
         this.game = game;
+        this.score= score;
     }
-
     @Override
     public void show() {
         game.batch = new SpriteBatch();
-        font = new BitmapFont();
+
+        font=new BitmapFont(Gdx.files.internal("horizon.fnt"));
+        font1=new BitmapFont();
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
         // Create title label
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, null);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.RED);
+
         Label titleLabel = new Label("Game Over", labelStyle);
-        titleLabel.setPosition(Gdx.graphics.getWidth() / 2 - titleLabel.getWidth() / 2 -100, Gdx.graphics.getHeight() / 2 + 100);
-        titleLabel.setFontScale(4);
+        titleLabel.setPosition(Gdx.graphics.getWidth() / 2 - titleLabel.getWidth() / 2 , Gdx.graphics.getHeight() / 2 + 100);
+
+        Label scoreLabel = new Label("Score",labelStyle);
+        scoreLabel.setPosition(Gdx.graphics.getWidth() / 2 - titleLabel.getWidth() / 2 + 100 , Gdx.graphics.getHeight() / 2 );
+
+        scoreCountLabel=new Label(String.format("%03d", score), new Label.LabelStyle(font, Color.GREEN));
+        scoreCountLabel.setPosition(Gdx.graphics.getWidth() / 2 - titleLabel.getWidth() / 2 + 150  , Gdx.graphics.getHeight() / 2 - 75);
+
         stage.addActor(titleLabel);
+        stage.addActor(scoreLabel);
+        stage.addActor(scoreCountLabel);
         // Create buttons
-        TextButton replayButton = createButton("Replay", 300, Gdx.graphics.getHeight() -350);
+        TextButton replayButton = createButton("Replay", 300, Gdx.graphics.getHeight() - 500);
 
         // Add click listeners to the buttons
         replayButton.addListener(new ClickListener() {
@@ -60,7 +70,7 @@ public class GameOverScreen extends ScreenAdapter {
 
     private TextButton createButton(String text, float x, float y) {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.font = font;
+        style.font = font1;
 
         TextButton button = new TextButton(text, style);
         button.setPosition(x, y);
