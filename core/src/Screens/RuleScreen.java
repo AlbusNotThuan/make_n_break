@@ -30,7 +30,7 @@ public class RuleScreen extends ScreenAdapter {
     @Override
     public void show() {
         game.batch = new SpriteBatch();
-        font = new BitmapFont();
+        font=new BitmapFont(Gdx.files.internal("ruleFont.fnt"));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -42,7 +42,7 @@ public class RuleScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
 
         // Create a return button
-        TextButton returnButton = createButton("Return to Menu", -40, 550);
+        TextButton returnButton = createButton("Return to Menu", 0, 600);
 
         // Add a click listener to the return button
         returnButton.addListener(new ClickListener() {
@@ -69,25 +69,25 @@ public class RuleScreen extends ScreenAdapter {
         game.batch.draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         // Draw the rules text
-        font.draw(game.batch, "Make 'n' Break Rule:", 10, Gdx.graphics.getHeight() - 100);
+        font.draw(game.batch, "Make 'n' Break Rule:", 10, Gdx.graphics.getHeight() - 50);
         font.draw(game.batch, "Objective:\n" +
-                "The goal of Make 'n' Break is to earn points by successfully recreating various structures within a specified time limit.\n" +
+                "The goal of Make 'n' Break is to earn points by successfully recreating various \nstructures within a specified time limit.\n" +
                 "\n" +
                 "Gameplay:\n" +
                 "The game is played in rounds.\n" +
-                "At the start of each round, a player flips the top card from the stack to reveal a structure that needs to be replicated.\n" +
-                "All players or teams simultaneously attempt to build the structure shown on the card using their building blocks.\n" +
+                "At the start of each round, a player flips the top card from the stack to reveal \na structure that needs to be replicated.\n" +
+                "All players or teams simultaneously attempt to build the structure shown on \nthe card using their building blocks.\n" +
                 "The round ends when the timer runs out.\n" +
                 "\n" +
                 "Scoring:\n" +
                 "Players score points based on the accuracy and completeness of their structures.\n" +
-                "If a player or team successfully replicates the structure, they score the full points indicated on the card.\n" +
-                "Incomplete or inaccurate structures may earn partial points.\n" +
-                "No points are awarded for structures that are significantly different from the target.\n" +
+                "If a player or team successfully replicates the structure, they score full points \nindicated on the card.\n" +
+                "Incomplete or inaccurate structures may earn zero point.\n" +
+                "No points are awarded for structures that are significantly different \nfrom the target.\n" +
                 "\n" +
                 "Winning:\n" +
                 "The game typically consists of several rounds.\n" +
-                "The player or team with the highest total score at the end of the agreed-upon number of rounds wins.", 30, Gdx.graphics.getHeight() - 120);
+                "The player or team with the highest total score at the end of three rounds wins.", 30, Gdx.graphics.getHeight() - 75);
 
         game.batch.end();
 
@@ -115,11 +115,6 @@ public class RuleScreen extends ScreenAdapter {
         button.setHeight(40);
 
         style.fontColor = null;
-
-        /*TextButton buttonn = new TextButton(text, style);
-        buttonn.setPosition(x, y);
-        buttonn.setWidth(400);
-        buttonn.setHeight(500);*/
 
         return button;
     }
