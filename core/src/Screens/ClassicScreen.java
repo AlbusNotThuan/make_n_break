@@ -251,6 +251,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
     }
 
     private void gameOver() {
+        music.stop();
         game.setScreen(new GameOverScreen(game,score));
     }
 
