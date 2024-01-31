@@ -2,6 +2,8 @@ package Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -28,10 +30,13 @@ public class MainMenuScreen extends ScreenAdapter {
     private OrthographicCamera gamecam;
     private Viewport gameport;
     private Texture img= new Texture(Gdx.files.internal("anhgame.png"));;
+    private Music music;
+    private Sound clicksound;
     public MainMenuScreen(MakeAndBreak game) {
         this.game = game;
         gamecam = new OrthographicCamera();
         gameport = new FitViewport(1520 , 1200, gamecam);
+
     }
 
     @Override
@@ -39,6 +44,15 @@ public class MainMenuScreen extends ScreenAdapter {
         font = new BitmapFont();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+
+        //music
+        music = Gdx.audio.newMusic(Gdx.files.internal("mainmenu_msc.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
+
+        //sound
+        clicksound=Gdx.audio.newSound(Gdx.files.internal("clicksound.mp3"));
 
         // Create buttons
         TextButton playButton = createButton("Play", 300, Gdx.graphics.getHeight() -350);
@@ -50,6 +64,7 @@ public class MainMenuScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 try {
+                    clicksound.play();
                     game.setScreen(new ClassicScreen((MakeAndBreak) game));
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
@@ -60,6 +75,7 @@ public class MainMenuScreen extends ScreenAdapter {
         ruleButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                clicksound.play();
                 game.setScreen(new RuleScreen(game));
             }
         });
@@ -105,6 +121,7 @@ public class MainMenuScreen extends ScreenAdapter {
         img.dispose();
         font.dispose();
         stage.dispose();
+        music.dispose();
     }
 
     @Override
