@@ -127,12 +127,12 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         timeCount = 0;
         timeUp = false;
         //load font
-        font=new BitmapFont(Gdx.files.internal("Horizon.otf"));
+        font=new BitmapFont(Gdx.files.internal("normalFont_1.fnt"));
         //define our labels using the String, and a Label style consisting of a font and color
-        countdownLabel = new Label(String.format("%02d", worldTimer), new Label.LabelStyle(font, Color.WHITE));
-        countdownLabel.setFontScale(3);
-        timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
-        timeLabel.setFontScale(3);
+        countdownLabel = new Label(String.format("%02d", worldTimer), new Label.LabelStyle(font, Color.BLACK));
+        //countdownLabel.setFontScale(3);
+        timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.BLACK));
+        //timeLabel.setFontScale(3);
         //add our labels to our table, padding the top, and giving them all equal width with
         Group group = new Group();
         group.addActor(countdownLabel);
