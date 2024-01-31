@@ -2,6 +2,8 @@ package Screens;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
@@ -44,6 +46,8 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
     private Label timeLabel;
     private Label scoreLabel;
     private Label scoreCountLabel;
+    private Music music;
+    private Sound clicksound;
     public ClassicScreen(MakeAndBreak game) throws FileNotFoundException {
         //Gamecam
         this.game = game;
@@ -51,6 +55,15 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         gameport = new FitViewport(game.WIDTH , game.HEIGHT, gamecam);
         gamecam.setToOrtho(false, game.WIDTH,game.HEIGHT);
         gamecam.translate(-game.WIDTH/2,-game.HEIGHT/2);
+
+        //music
+        music = Gdx.audio.newMusic(Gdx.files.internal("mainmenu_msc.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
+
+        //sound
+        clicksound=Gdx.audio.newSound(Gdx.files.internal("clicksound.mp3"));
 
         //Init Stage
         stage = new Stage();
