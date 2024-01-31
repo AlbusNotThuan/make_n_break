@@ -2,8 +2,6 @@ package Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -21,12 +19,10 @@ import com.makeandbreak.game.MakeAndBreak;
 public class GameOverScreen extends ScreenAdapter {
     private final MakeAndBreak game;
     private Stage stage;
-    private Texture img = new Texture(Gdx.files.internal("endscreen_img.png"));
+    private Texture img = new Texture(Gdx.files.internal("background rule.jpg"));
     private BitmapFont font,font1;
     private int score;
     private Label scoreCountLabel;
-    private Music music;
-    private Sound clicksound;
 
     public GameOverScreen(MakeAndBreak game, int score) {
         this.game = game;
@@ -34,15 +30,6 @@ public class GameOverScreen extends ScreenAdapter {
     }
     @Override
     public void show() {
-        //music
-        music = Gdx.audio.newMusic(Gdx.files.internal("mainmenu_msc.mp3"));
-        music.setLooping(true);
-        music.setVolume(0.5f);
-        music.play();
-
-        //sound
-        clicksound=Gdx.audio.newSound(Gdx.files.internal("clicksound.mp3"));
-
         game.batch = new SpriteBatch();
 
         font=new BitmapFont(Gdx.files.internal("horizon.fnt"));
@@ -52,7 +39,7 @@ public class GameOverScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
 
         // Create title label
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.GOLD);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.RED);
 
         Label titleLabel = new Label("Game Over", labelStyle);
         titleLabel.setPosition(Gdx.graphics.getWidth() / 2 - titleLabel.getWidth() / 2 , Gdx.graphics.getHeight() / 2 + 100);
@@ -73,8 +60,6 @@ public class GameOverScreen extends ScreenAdapter {
         replayButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                clicksound.play();
-                music.stop();
                 game.setScreen(new MainMenuScreen(game));
             }
         });
@@ -104,7 +89,6 @@ public class GameOverScreen extends ScreenAdapter {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 
         game.batch.begin();
 

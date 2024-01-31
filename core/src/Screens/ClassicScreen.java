@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -26,7 +25,6 @@ import java.io.FileNotFoundException;
 import Classes.ColorSelector;
 import Classes.CustomButton;
 import Classes.Grid;
-import Classes.Player;
 import Classes.Quiz;
 
 public class ClassicScreen extends ApplicationAdapter implements Screen, InputProcessor {
@@ -47,7 +45,6 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
     private Label timeLabel;
     private Label scoreLabel;
     private Label scoreCountLabel;
-    private final Player player1 = new Player();
     public ClassicScreen(MakeAndBreak game) throws FileNotFoundException {
         //Gamecam
         this.game = game;
@@ -86,9 +83,9 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
                             System.out.println("Correct");
                             quiz.currentQuiz = quiz.returnQuiz();
                             change = true;
-                            player1.setPoints();
+                            addScore(3);
                         } else {
-                            System.out.println("Dumbass");
+                            System.out.println("TryAgain");
                         }
                     } catch (FileNotFoundException e) {
                         throw new RuntimeException(e);
@@ -110,15 +107,11 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         Multiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(Multiplexer);
 
-//        grid.Text2Array();
-
-
         //Quiz
         game.batch = new SpriteBatch();
 
-
         //Timer
-        //define a table used to organize our hud's labels
+        //define a table used to organize hud's labels
         Table table = new Table();
         table.setPosition(0,-400);
         //Top-Align table
@@ -126,36 +119,38 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         //make the table fill the entire stage
         table.setFillParent(true);
         // Initialize timer variables
-        worldTimer = 20; // Initial time in seconds
+        worldTimer = 60; // Initial time in seconds
         timeCount = 0;
         score =0;
-        //timeUp = false;
+
         //load font
         font=new BitmapFont(Gdx.files.internal("horizon.fnt"));
+
         //define our labels using the String, and a Label style consisting of a font and color
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font, Color.WHITE));
+
         timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
         timeLabel.setFontScale(0.7f);
+        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font, Color.WHITE));
+
         scoreLabel = new Label("SCORE", new Label.LabelStyle(font, Color.WHITE));
         scoreLabel.setFontScale(0.7f);
-        scoreCountLabel=new Label(String.format("%03d", player1.getPoints()), new Label.LabelStyle(font, Color.WHITE));
+        scoreCountLabel=new Label(String.format("%03d", score), new Label.LabelStyle(font, Color.WHITE));
 
         //add our labels to our table, padding the top, and giving them all equal width with
         table.add(timeLabel).expandX().padRight(50);
         table.add(scoreLabel).expandX().padRight(1200);
-        //add a second row to our table
-        table.row();
+
+        table.row();//add a second row to our table
+
         table.add(countdownLabel).expandX().padRight(50);
         table.add(scoreCountLabel).expandX().padRight(1200);
 
         //add our table to the stage
         stage.addActor(table);
-
     }
-    //public BitmapFont getFont(){return font;}
+
     @Override
     public void show() {
-
     }
 
     private String getColorName(Color color) {
@@ -229,8 +224,13 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         }
     }
 
+    public void addScore(int value){
+        score += value;
+        scoreCountLabel.setText(String.format("%03d", score));
+    }
+
     private void gameOver() {
-        game.setScreen(new GameOverScreen(game));
+        game.setScreen(new GameOverScreen(game,score));
     }
 
     @Override
