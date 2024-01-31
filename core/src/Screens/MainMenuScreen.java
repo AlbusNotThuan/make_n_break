@@ -65,6 +65,7 @@ public class MainMenuScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 try {
                     clicksound.play();
+                    music.stop();
                     game.setScreen(new ClassicScreen((MakeAndBreak) game));
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
@@ -76,6 +77,7 @@ public class MainMenuScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 clicksound.play();
+                music.stop();
                 game.setScreen(new RuleScreen(game));
             }
         });
