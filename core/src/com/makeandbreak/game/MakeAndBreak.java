@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 
 import Screens.BufferScreen;
 import Screens.ClassicScreen;
+import Screens.ControlScreen;
 import Screens.MainMenuScreen;
 
 public class MakeAndBreak extends Game {
