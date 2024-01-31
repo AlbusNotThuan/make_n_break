@@ -2,6 +2,8 @@ package Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -23,6 +25,8 @@ public class ControlScreen implements Screen {
     private OrthographicCamera gamecam;
     private Viewport gameport;
     private Stage stage;
+    private Music music;
+    private Sound clicksound;
     private final Texture background = new Texture(Gdx.files.internal("control.png"));
 
     public ControlScreen(MakeAndBreak game) {
@@ -31,6 +35,15 @@ public class ControlScreen implements Screen {
 
     @Override
     public void show() {
+        //music
+        music = Gdx.audio.newMusic(Gdx.files.internal("mainmenu_msc.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
+
+        //sound
+        clicksound=Gdx.audio.newSound(Gdx.files.internal("clicksound.mp3"));
+
         gamecam = new OrthographicCamera();
         gameport = new FitViewport(game.WIDTH, game.HEIGHT, gamecam);
         gamecam.setToOrtho(false, game.WIDTH, game.HEIGHT);
@@ -42,6 +55,8 @@ public class ControlScreen implements Screen {
         returnButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                music.stop();
+                clicksound.play();
                 game.setScreen(new MainMenuScreen(game));
             }
         });
