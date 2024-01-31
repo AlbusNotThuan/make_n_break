@@ -25,7 +25,7 @@ public class RuleScreen extends ScreenAdapter {
     private Texture backgroundTexture;
     private Stage stage;
     private Music music;
-    private Sound clicksound;
+    private Sound clicksound,cor_sound,fal_sound;
 
     public RuleScreen(MakeAndBreak game) {
         this.game = game;
@@ -62,6 +62,7 @@ public class RuleScreen extends ScreenAdapter {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 clicksound.play();
+                music.stop();
                 game.setScreen(new MainMenuScreen(game));
             }
         });
