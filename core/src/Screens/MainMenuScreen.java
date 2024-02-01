@@ -55,23 +55,27 @@ public class MainMenuScreen extends ScreenAdapter {
 
         // Create buttons
         TextButton playButton = createButton("Play", 300, Gdx.graphics.getHeight() -350);
-
+        TextButton controlButton = createButton("Control", 300, game.HEIGHT - 450);
         TextButton ruleButton = createButton("Rule", 300, Gdx.graphics.getHeight() - 400);
 
         // Add click listeners to the buttons
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                try {
-                    music.stop();
-                    clicksound.play();
-                    game.setScreen(new ClassicScreen((MakeAndBreak) game));
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                music.stop();
+                clicksound.play();
+                game.setScreen(new BufferScreen((MakeAndBreak) game));
             }
         });
+        controlButton.addListener(new ClickListener(){
 
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                music.stop();
+                clicksound.play();
+                game.setScreen(new ControlScreen(game));
+            }
+        });
         ruleButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -84,6 +88,7 @@ public class MainMenuScreen extends ScreenAdapter {
         // Add buttons to the stage
         stage.addActor(playButton);
         stage.addActor(ruleButton);
+        stage.addActor(controlButton);
     }
 
     private TextButton createButton(String text, float x, float y) {
