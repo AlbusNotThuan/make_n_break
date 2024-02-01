@@ -59,13 +59,14 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         //music
         music = Gdx.audio.newMusic(Gdx.files.internal("playscreen_msc.mp3"));
         music.setLooping(true);
-        music.setVolume(0.5f);
+        music.setVolume(0.8f);
         music.play();
 
         //sound
         cor_sound=Gdx.audio.newSound(Gdx.files.internal("correct_sound.mp3"));
         fal_sound=Gdx.audio.newSound(Gdx.files.internal("false_sound.mp3"));
         vic_sound=Gdx.audio.newSound(Gdx.files.internal("victory.mp3"));
+
         //Init Stage
         stage = new Stage();
         Grid grid = new Grid();
@@ -97,7 +98,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
                     try {
                         if(grid.checkMatrix(quiz.getQuizFiles()[1])){
                             System.out.println("Correct");
-                            cor_sound.play();
+                            cor_sound.play(0.7f);
                             quiz.currentQuiz = quiz.returnQuiz();
                             change = true;
                             addScore(10);
@@ -119,6 +120,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
                 return false;
             }
         };
+
         InputMultiplexer Multiplexer = new InputMultiplexer();
         Multiplexer.addProcessor(stage);
         Multiplexer.addProcessor(inputProcessor);
@@ -128,7 +130,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         //Quiz
         game.batch = new SpriteBatch();
 
-        //Timer
+        //Timer and score
         //define a table used to organize hud's labels
         Table table = new Table();
         table.setPosition(0,-400);
@@ -139,7 +141,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         // Initialize timer variables
         worldTimer = 90; // Initial time in seconds
         timeCount = 0;
-        score =0;
+        score = 0;
 
         //load font
         font=new BitmapFont(Gdx.files.internal("horizon.fnt"));
@@ -148,12 +150,16 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
 
         timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.GOLD));
         timeLabel.setFontScale(0.7f);
+
         countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font, Color.GOLD));
         countdownLabel.setFontScale(0.85f);
+
         scoreLabel = new Label("SCORE", new Label.LabelStyle(font, Color.GOLD));
         scoreLabel.setFontScale(0.7f);
+
         scoreCountLabel=new Label(String.format("%03d", score), new Label.LabelStyle(font, Color.GOLD));
         scoreCountLabel.setFontScale(0.85f);
+
         //add our labels to our table, padding the top, and giving them all equal width with
         table.add(timeLabel).expandX().padRight(50);
         table.add(scoreLabel).expandX().padRight(1200);
@@ -202,8 +208,8 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
     @Override
     public void render(float delta) {
         update(delta);
-        //Gdx.gl.glClearColor(4/255f, 105/255f, 30/255f, 1);
-        //Gdx.gl.glClearColor(223/255f, 207/255f, 207/255f, 1);
+
+        //main screen color ( Navy blue )
         Gdx.gl.glClearColor(0/255f, 0/255f, 128/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

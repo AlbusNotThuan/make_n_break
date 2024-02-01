@@ -43,12 +43,12 @@ public class RuleScreen extends ScreenAdapter {
         clicksound=Gdx.audio.newSound(Gdx.files.internal("clicksound.mp3"));
 
         game.batch = new SpriteBatch();
-        font = new BitmapFont(Gdx.files.internal("ruleFont.fnt"));
+        font = new BitmapFont(Gdx.files.internal("ruleFont1.fnt"));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         // Load the background texture
-        backgroundTexture = new Texture("yellow.png");  // Replace with your background image
+        backgroundTexture = new Texture("endscreen_img.png");  // Replace with your background image
 
         // Create the stage for UI elements
         stage = new Stage(new ScreenViewport());
