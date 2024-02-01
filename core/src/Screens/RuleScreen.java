@@ -96,7 +96,7 @@ public class RuleScreen extends ScreenAdapter {
                 "The round ends when the timer runs out.\n" +
                 "\n" +
                 "Scoring:\n" +
-                "Players score 3 points if successfully replicates the structure\n" +
+                "Players score 10 points if successfully replicates the structure\n" +
                 "No points are awarded for structures that are significantly different \nfrom the target.\n" +
                 "You must replicated exactly the structure shown to get a new card" +
                 "\n" +
