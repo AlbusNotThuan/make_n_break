@@ -121,7 +121,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         //make the table fill the entire stage
         table.setFillParent(true);
         // Initialize timer variables
-        worldTimer = 0; // Initial time in seconds
+        worldTimer = 90; // Initial time in seconds
         timeCount = 0;
         score =0;
 
