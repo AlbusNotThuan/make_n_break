@@ -100,7 +100,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
                             cor_sound.play();
                             quiz.currentQuiz = quiz.returnQuiz();
                             change = true;
-                            addScore(3);
+                            addScore(10);
                         } else {
                             System.out.println("TryAgain");
                             fal_sound.play();
@@ -137,7 +137,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         //make the table fill the entire stage
         table.setFillParent(true);
         // Initialize timer variables
-        worldTimer = 20; // Initial time in seconds
+        worldTimer = 90; // Initial time in seconds
         timeCount = 0;
         score =0;
 
