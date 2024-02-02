@@ -20,7 +20,7 @@ public class ColorSelector extends ImageButton {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 GlobalState.selectedColor = color;
-                System.out.println(textureFilePath);
+//                System.out.println(textureFilePath);
             }
         });
     }
