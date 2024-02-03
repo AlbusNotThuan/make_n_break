@@ -10,7 +10,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		Graphics.DisplayMode dm = Lwjgl3ApplicationConfiguration.getDisplayMode();
-		config.setWindowedMode(dm.width/7*3, dm.height/5*3);
+		config.setWindowedMode(822, 648);
 		config.setForegroundFPS(60);
 		config.setTitle("MakeAndBreak");
 		config.setResizable(false);
