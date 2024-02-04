@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Grid extends Table {
-    private CustomButton[][] buttons;
+    private final CustomButton[][] buttons;
     public final int COLNUM = 6;
     public final int ROWNUM = 7;
 

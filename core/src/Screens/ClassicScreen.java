@@ -91,9 +91,9 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         InputProcessor inputProcessor = new InputAdapter(){
             @Override
             public boolean keyDown(int keycode) {
-                /*if (keycode == Input.Keys.E){
+                if (keycode == Input.Keys.E){
                     gameOver();
-                }*/
+                }
                 if (keycode == Input.Keys.SPACE){
                     try {
                         if(grid.checkMatrix(quiz.getQuizFiles()[1])){
