@@ -215,18 +215,6 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
 
         //Cards
         game.batch.begin();
-        if (change) {
-            // Dispose of the old texture
-            if (img != null) {
-                img.dispose();
-            }
-
-            // Load the new texture
-            String[] quizFiles = quiz.getQuizFiles();
-            img = new Texture(quizFiles[0]);
-            change = false;
-        }
-
         game.batch.draw(img, 420, 350, 456/4*3, 320/4*3);
         game.batch.end();
 
@@ -248,6 +236,17 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
             }
             countdownLabel.setText(String.format("%03d", worldTimer));
             timeCount = 0;
+        }
+        if (change) {
+            // Dispose of the old texture
+            if (img != null) {
+                img.dispose();
+            }
+
+            // Load the new texture
+            String[] quizFiles = quiz.getQuizFiles();
+            img = new Texture(quizFiles[0]);
+            change = false;
         }
     }
 
