@@ -2,7 +2,6 @@ package Classes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import java.io.BufferedReader;
@@ -39,7 +38,7 @@ public class Grid extends Table {
 
     public boolean checkMatrix(String filepath) throws FileNotFoundException {
         ArrayList<String> currentGrid = new ArrayList<>();
-        ArrayList<String> answer = null;
+        ArrayList<String> answer;
         try {
             answer = Text2Array(filepath);
         } catch (IOException e) {
