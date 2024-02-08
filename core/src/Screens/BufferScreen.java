@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -20,15 +19,14 @@ import java.io.FileNotFoundException;
 
 public class BufferScreen implements Screen  {
     private final MakeAndBreak game;
-    private OrthographicCamera gamecam;
-    private Viewport gameport;
-    private Stage stage;
+    private final Viewport gameport;
+    private final Stage stage;
     public BufferScreen(MakeAndBreak game){
         this.game = game;
-        gamecam = new OrthographicCamera();
+        OrthographicCamera gamecam = new OrthographicCamera();
         gameport = new FitViewport(game.WIDTH, game.HEIGHT, gamecam);
         gamecam.setToOrtho(false, game.WIDTH, game.HEIGHT);
-        gamecam.translate(-game.WIDTH/2,-game.HEIGHT/2);
+        gamecam.translate((float) -game.WIDTH /2, (float) -game.HEIGHT /2);
         this.stage = new Stage(gameport, game.batch);
     }
     @Override
@@ -38,18 +36,20 @@ public class BufferScreen implements Screen  {
         Gdx.input.setInputProcessor(stage);
 
 
-        ImageButton.ImageButtonStyle letsbuildStyle = new ImageButton.ImageButtonStyle();
+        new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle letsbuildStyle;
         letsbuildStyle = skin.get("letsbuild", ImageButton.ImageButtonStyle.class);
 
-        ImageButton.ImageButtonStyle readyStyle = new ImageButton.ImageButtonStyle();
+        new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle readyStyle;
         readyStyle = skin.get("ready", ImageButton.ImageButtonStyle.class);
 
         ImageButton readyButton = new ImageButton(readyStyle);
         ImageButton letsbuildButton = new ImageButton(letsbuildStyle);
         letsbuildButton.setSize(300,102);
         readyButton.setSize(99*3,65*3);
-        readyButton.setPosition(game.WIDTH / 2 - readyButton.getWidth() / 2, game.HEIGHT / 2 - readyButton.getHeight() / 2 + letsbuildButton.getHeight()/2 + 10);
-        letsbuildButton.setPosition(game.WIDTH / 2 - letsbuildButton.getWidth() / 2, game.HEIGHT / 2 - letsbuildButton.getHeight() / 2);
+        readyButton.setPosition((float) game.WIDTH / 2 - readyButton.getWidth() / 2, (float) game.HEIGHT / 2 - readyButton.getHeight() / 2 + letsbuildButton.getHeight()/2 + 10);
+        letsbuildButton.setPosition((float) game.WIDTH / 2 - letsbuildButton.getWidth() / 2, (float) game.HEIGHT / 2 - letsbuildButton.getHeight() / 2);
         letsbuildButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

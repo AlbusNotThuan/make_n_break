@@ -31,18 +31,18 @@ import Classes.Quiz;
 
 public class ClassicScreen extends ApplicationAdapter implements Screen, InputProcessor {
     final MakeAndBreak game;
-    private OrthographicCamera gamecam;
-    private Viewport gameport;
-    private Stage stage;
+    private final OrthographicCamera gamecam;
+    private final Viewport gameport;
+    private final Stage stage;
     private Texture img;
-    private Quiz quiz = new Quiz();
+    private final Quiz quiz = new Quiz();
     private boolean change = true;
 
-    private BitmapFont font;
+    private final BitmapFont font;
     private float timeCount; // Timer variable
     private static Integer score;
     private int worldTimer; // Initial timer value in seconds
-    private Label countdownLabel;
+    private final Label countdownLabel;
     private Label timeLabel;
     private Label scoreLabel;
     private Label scoreCountLabel;
@@ -54,7 +54,7 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
         gamecam = new OrthographicCamera();
         gameport = new FitViewport(game.WIDTH , game.HEIGHT, gamecam);
         gamecam.setToOrtho(false, game.WIDTH,game.HEIGHT);
-        gamecam.translate(-game.WIDTH/2,-game.HEIGHT/2);
+        gamecam.translate((float) -game.WIDTH /2, (float) -game.HEIGHT /2);
 
         //music
         music = Gdx.audio.newMusic(Gdx.files.internal("playscreen_msc.mp3"));
@@ -264,17 +264,6 @@ public class ClassicScreen extends ApplicationAdapter implements Screen, InputPr
     public void create() {
         img = new Texture(quiz.getQuizFiles()[0]);
         super.create();
-    }
-
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
     }
 
     @Override

@@ -6,15 +6,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class CustomButton extends ImageButton {
-    private int id;
-    private Grid grid;
     private Color selectedColor = Color.YELLOW;
     private static final ImageButtonStyle buttonStyle;
     static {
@@ -26,12 +22,9 @@ public class CustomButton extends ImageButton {
     }
     public CustomButton(Grid grid, int id){
         super(buttonStyle);
-        this.id = id;
-        this.grid = grid;
         this.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                boolean wasChecked = !isChecked();
                 Color wasColor = getSelectedColor();
                 int row = id / grid.ROWNUM;
                 int col = id % grid.ROWNUM;

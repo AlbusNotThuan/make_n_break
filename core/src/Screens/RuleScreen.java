@@ -1,6 +1,5 @@
 package Screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.Gdx;
@@ -55,7 +54,7 @@ public class RuleScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
 
         // Create a return button
-        TextButton returnButton = createButton("Return to Menu", 0, 600);
+        TextButton returnButton = createButton();
 
         // Add a click listener to the return button
         returnButton.addListener(new ClickListener() {
@@ -118,12 +117,12 @@ public class RuleScreen extends ScreenAdapter {
         stage.dispose();
     }
 
-    private TextButton createButton(String text, float x, float y) {
+    private TextButton createButton() {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.font = font;
 
-        TextButton button = new TextButton(text, style);
-        button.setPosition(x, y);
+        TextButton button = new TextButton("Return to Menu", style);
+        button.setPosition((float) 0, (float) 600);
         style.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("blueBackground.jpg"))));
         button.setWidth(200);
         button.setHeight(40);
