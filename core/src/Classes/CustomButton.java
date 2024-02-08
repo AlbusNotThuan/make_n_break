@@ -13,8 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class CustomButton extends ImageButton {
-
-    private boolean clicked;
     private int id;
     private Grid grid;
     private Color selectedColor = Color.YELLOW;
@@ -26,10 +24,6 @@ public class CustomButton extends ImageButton {
         buttonStyle = new ImageButtonStyle();
         buttonStyle.up =  new TextureRegionDrawable(textureRegion);
     }
-    public CustomButton(ImageButtonStyle style, Grid table, int id) {
-        super(style);
-    }
-
     public CustomButton(Grid grid, int id){
         super(buttonStyle);
         this.id = id;
