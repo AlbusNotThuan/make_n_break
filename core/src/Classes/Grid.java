@@ -14,14 +14,6 @@ public class Grid extends Table {
     private final CustomButton[][] buttons;
     public final int COLNUM = 6;
     public final int ROWNUM = 7;
-
-    public CustomButton getButton(int row, int col) {
-        if (row >= 0 && row < buttons.length && col >= 0 && col < buttons[row].length) {
-            return buttons[row][col];
-        } else {
-            throw new IllegalArgumentException("Invalid row or column");
-        }
-    }
     public Grid(){
         super();
         buttons = new CustomButton[ROWNUM][COLNUM]; // Initialize the array
@@ -33,6 +25,13 @@ public class Grid extends Table {
                 add(buttons[i][j]).width(50).height(50).pad(5);
             }
             row();
+        }
+    }
+    public CustomButton getButton(int row, int col) {
+        if (row >= 0 && row < buttons.length && col >= 0 && col < buttons[row].length) {
+            return buttons[row][col];
+        } else {
+            throw new IllegalArgumentException("Invalid row or column");
         }
     }
     public boolean checkMatrix(String filepath) throws FileNotFoundException {
