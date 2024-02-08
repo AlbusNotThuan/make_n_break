@@ -46,25 +46,17 @@ public class Grid extends Table {
         }
         for (CustomButton[] row : buttons){
             for (CustomButton button : row){
-                currentGrid.add(button.selectedColor.toString());
+                currentGrid.add(button.getSelectedColor().toString());
 //                System.out.println(button.selectedColor.toString());
             }
         }
-
-//        //Print grid
-//        for (Color color : currentGrid){
-//            System.out.println(color.toString());
-//        }
-
-
         return currentGrid.equals(answer);
     }
 
     public ArrayList<String> Text2Array(String filepath) throws FileNotFoundException {
-        ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<String> lines = new ArrayList<>();
         FileHandle file = Gdx.files.internal(filepath);
-        String text = file.readString();
-            BufferedReader reader = new BufferedReader(file.reader());
+        BufferedReader reader = new BufferedReader(file.reader());
 
         String line;
         try {

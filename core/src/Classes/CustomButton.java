@@ -17,7 +17,7 @@ public class CustomButton extends ImageButton {
     private boolean clicked;
     private int id;
     private Grid grid;
-    public Color selectedColor = Color.YELLOW;
+    private Color selectedColor = Color.YELLOW;
     private static final ImageButtonStyle buttonStyle;
     static {
         //Default Texture

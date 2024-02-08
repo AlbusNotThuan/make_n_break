@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import Screens.GameOverScreen;
+
 public class Quiz {
     private final int NUMQUIZ = 21;
     private List<Integer> quizzes;
@@ -37,5 +39,4 @@ public class Quiz {
         String txtFile = "ans/" + this.currentQuiz + ".txt";
         return new String[] {imgFile, txtFile};
     }
-
 }

@@ -9,7 +9,6 @@ import com.makeandbreak.game.MakeAndBreak;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		Graphics.DisplayMode dm = Lwjgl3ApplicationConfiguration.getDisplayMode();
 		config.setWindowedMode(822, 648);
 		config.setForegroundFPS(60);
 		config.setTitle("MakeAndBreak");
